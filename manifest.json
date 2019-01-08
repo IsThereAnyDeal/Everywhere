@@ -15,11 +15,11 @@
 		},
 	
 	"content_scripts": [{
-	"css": ["styles.css"],
-	"js": ["content.js"],
-	"run_at": "document_end",
-	"matches": ["<all_urls>"],
-	"exclude_matches": [
+		"css": ["styles.css"],
+		"js": ["content.js"],
+		"run_at": "document_end",
+		"matches": ["<all_urls>"],
+		"exclude_matches": [
 			"https://isthereanydeal.com/*",
 			"http://localhost/*"
 		]
