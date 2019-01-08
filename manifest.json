@@ -1,0 +1,31 @@
+{
+	"manifest_version": 2,
+
+	"name": "IsThereAnyDeal Everywhere",
+	"version": "0.9.2",
+	"description": "Check game prices and the best deals on all pages with IsThereAnyDeal",
+	
+	"browser_action": {
+		"default_icon": "tab-icon.png",
+		"default_title": "When the price is right, you will play all night :)"
+	},
+	
+	"icons": {
+		  "128": "170.png"
+		},
+	
+	"content_scripts": [{
+	"css": ["styles.css"],
+	"js": ["content.js"],
+	"run_at": "document_end",
+	"matches": ["<all_urls>"],
+	"exclude_matches": [
+			"https://isthereanydeal.com/*",
+			"http://localhost/*"
+		]
+	}],
+
+	"permissions": [
+		"tabs", "<all_urls>"
+	]
+}
