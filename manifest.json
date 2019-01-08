@@ -7,7 +7,7 @@
 	
 	"browser_action": {
 		"default_icon": "tab-icon.png",
-		"default_title": "When the price is right, you will play all night :)"
+		"default_title": "When the price is right, you will play all night"
 	},
 	
 	"icons": {
