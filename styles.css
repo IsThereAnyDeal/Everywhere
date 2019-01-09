@@ -130,10 +130,7 @@
     border:1px solid black;
     border-radius:2px;
     color:white;
-    display:inline-flex;
-}
-.itad_icon--main i {
-
+    display:inline;
 }
 
 .itad_icon--price {
