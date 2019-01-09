@@ -135,7 +135,7 @@ function getItemInfo(e, currentInfoElemId)
 				
 				if(itad_plain && itad_plain.length == 2)
 				{
-					itad_info_output += '<a target="_blank" rel="noopener" href="https://isthereanydeal.com/#/page:game/wait?plain='+itad_plain[1]+'" class="itad_info_elem_btn">'+ Icon.waitlist +' Add to ITAD Waitlist</a>';
+					itad_info_output += '<a target="_blank" rel="noopener" href="https://isthereanydeal.com/#/page:game/wait?plain='+itad_plain[1]+'" class="itad_info_elem_btn">'+ Icon.waitlist +' Wait for better price</a>';
 				}
 				
 				if(itad_item && itad_item['urls'] && itad_item['urls']['history'])

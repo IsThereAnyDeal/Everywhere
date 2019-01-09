@@ -16,7 +16,8 @@
 	
 	"content_scripts": [{
 		"css": [
-			"styles.css"
+			"styles.css",
+            "lib/fontawesome/css/all.css"
 		],
 		"js": [
 			"icons.js",
@@ -30,6 +31,10 @@
 			"http://localhost/*"
 		]
 	}],
+
+    "web_accessible_resources": [
+        "lib/fontawesome/*"
+    ],
 
 	"permissions": [
 		"tabs", "<all_urls>"

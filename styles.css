@@ -5,7 +5,11 @@
 	font-size: inherit !important;
 	pointer-events: inherit !important;
 	margin: 0 4px !important;
-    display:inline-block;
+    display:inline-block !important;
+    text-decoration: none !important;
+}
+.itad_extra_elem {
+    text-decoration: none !important;
 }
 
 #itad_info_container {
@@ -77,7 +81,7 @@
 .itad_info_elem_highlighted {
     font-size: 1.6em;
     padding: 2px;
-    margin:5px 0 2px 0;
+    margin:3px 0 2px 0;
     font-weight: bold;
 }
 
@@ -114,30 +118,28 @@
 
 .itad_icon {
     height: 1em;
-    display: inline-block;
-    vertical-align:middle;
-    position:relative;
-    bottom:0.1em;
-    fill:#444444;
+    display:inline-block;
+    vertical-align:baseline;
+    color:#777;
 }
 
 .itad_icon--main {
-    height: 0.8em;
-    padding:0.1em;
+    font-size: 0.8em;
+    padding:3px;
     background-color:#036db1;
     border:1px solid black;
     border-radius:2px;
-    fill:white;
+    color:white;
+    display:inline-flex;
+}
+.itad_icon--main i {
+
 }
 
 .itad_icon--price {
-    fill:#4caf50;
-    height:1.3em;
+    color:#4caf50;
 }
 .itad_icon--historylow {
-    fill:#4caf50;
+    color:#4caf50;
     height:0.8em;
-}
-.itad_icon--history {
-    bottom:0;
 }
