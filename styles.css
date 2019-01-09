@@ -15,7 +15,7 @@
     padding: 2px;
     font-size: 12px;
 	width: 190px;
-    min-height:100px;
+    min-height:75px;
     position: absolute;
     transition-property: visibility, opacity;
     transition-duration: 0s, .4s;
@@ -26,6 +26,8 @@
 	text-decoration: none;
     border-radius:2px;
     border:1px solid black;
+    display:flex;
+    flex-direction: column;
 }
 
 #itad_info_container.itad_info_container_hidden {
@@ -49,6 +51,12 @@
 	font-size: 0.95em;
 	padding: 2px;
 	display: inline-block;
+}
+
+.itad_info_elem {
+    display:flex;
+    flex-direction: column;
+    flex-grow:1;
 }
 
 .itad_info_elem_price {
@@ -94,6 +102,14 @@
     border-radius: 2px;
 	background-color: #f0f8ff;
     margin: 2px 4px;
+}
+
+.itad_info_elem_btn--noprice {
+    background-color: #f0f8ff;
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow:1;
 }
 
 .itad_icon {

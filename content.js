@@ -109,8 +109,13 @@ function getItemInfo(e, currentInfoElemId)
 					var price_cut_output = '';
 					if(itad_item['price']['cut'] != 0) price_cut_output = '<div class="itad_info_elem_cut">' + Icon.price + ' -'+itad_item['price']['cut']+'%</div>';
 					
-					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['price']['url']+'" class="itadhandled itad_info_elem_price">Best price now:<div class="itad_info_elem_highlighted">'+price_cut_output+itad_item['price']['price_formatted']+'</div>at '+itad_item['price']['store']+'</a>';
-				}
+					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['price']['url']+'" class="itadhandled itad_info_elem_price">';
+					itad_info_output += 'Best price now:<div class="itad_info_elem_highlighted">'+price_cut_output+itad_item['price']['price_formatted']+'</div> at '+itad_item['price']['store'];
+                    itad_info_output += '</a>';
+				} else {
+
+                    itad_info_output += '<span class="itadhandled itad_info_elem_btn itad_info_elem_btn--noprice">No current price found</span>';
+                }
 				
 				if(itad_item && itad_item['urls'] && itad_item['urls']['info'])
 				{
@@ -184,7 +189,7 @@ function OnEnterExtraElem(e)
 	if(currentInfoElem)
 	{
 		itad_info_status.innerHTML = "";
-		currentInfoElem.style.display = 'block';
+		currentInfoElem.style.display = 'flex';
 	}
 	else
 	{
