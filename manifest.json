@@ -11,7 +11,7 @@
 	},
 	
 	"icons": {
-		  "128": "170.png"
+		  "128": "extension-icon.png"
 		},
 	
 	"content_scripts": [{
