@@ -163,7 +163,7 @@ function OnEnterExtraElem(e)
 {
 	var rect = e.target.getBoundingClientRect();
 	itad_info_container.style.left = (getCoords(e.target).left + (rect.right - rect.left) - 8) + "px";
-	itad_info_container.style.top = (getCoords(e.target).top + (rect.bottom - rect.top) - 8) + "px";
+	itad_info_container.style.top = (getCoords(e.target).top + (rect.bottom - rect.top) - 8 - 82) + "px";
 	
 	clearTimeout(itad_display_timer);
 	itad_info_container.classList.remove("itad_info_container_hidden");
