@@ -5,6 +5,7 @@
 	font-size: inherit !important;
 	pointer-events: inherit !important;
 	margin: 0 4px !important;
+    display:inline-block;
 }
 
 #itad_info_container {
@@ -88,4 +89,34 @@
     border-radius: 3px;
 	background-color: #f0f8ff;
     margin: 2px 4px;
+}
+
+.itad_icon {
+    height: 1em;
+    display: inline-block;
+    vertical-align:middle;
+    position:relative;
+    bottom:0.1em;
+    fill:#444444;
+}
+
+.itad_icon--main {
+    height: 0.8em;
+    padding:0.1em;
+    background-color:#036db1;
+    border:1px solid black;
+    border-radius:2px;
+    fill:white;
+}
+
+.itad_icon--price {
+    fill:#4caf50;
+    height:1.3em;
+}
+.itad_icon--historylow {
+    fill:#4caf50;
+    height:1.15em;
+}
+.itad_icon--history {
+    bottom:0;
 }
