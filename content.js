@@ -9,7 +9,7 @@ function handleLinks()
 {
 	if (location.href.indexOf("isthereanydeal.com") == -1)
 	{
-		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not(.itadhandled)');
+		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itadhandled="1"])');
 		for (var i = 0; i < external_links.length; i++) 
 		{
 			let appIDs = external_links[i].href.match(/\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/);
@@ -28,7 +28,7 @@ function handleLinks()
 				elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, { passive: !0 });
 				elementToAppend.addEventListener("mouseleave", OnLeaveExtraElem, { passive: !0 });
 				
-				external_links[i].classList.add("itadhandled");
+				external_links[i].dataset.itadhandled = 1;
 			}
 		}
 	}
