@@ -103,6 +103,7 @@
     position:relative;
     bottom:0.1em;
     fill:#036db1;
+	width: auto;
 }
 
 .itad_icon--main {
