@@ -42,7 +42,7 @@ function handleLinks()
 		itad_info_container.appendChild(itad_info_container_header);
 		itad_info_status = document.createElement('div');
 		itad_info_status.id = "itad_info_status";
-		itad_info_status.innerHTML = "ITAD Ready...";
+		itad_info_status.innerHTML = "ITAD Ready...<br/>"+Icon.spinner;
 		itad_info_container.appendChild(itad_info_status);
 		document.body.appendChild(itad_info_container);
 		
@@ -188,7 +188,7 @@ function OnEnterExtraElem(e)
 	}
 	else
 	{
-		itad_info_status.innerHTML = "ITAD working...";
+		itad_info_status.innerHTML = "ITAD working...<br/>"+Icon.spinner;
 		getItemInfo(e, currentInfoElemId);
 	}
 	
