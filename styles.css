@@ -84,6 +84,10 @@
     font-size:0.8em;
 }
 
+.itad_info_elem_info {
+	margin: 12px;
+}
+
 .itad_info_elem_btn {
     display: block;
     padding: 2px;
