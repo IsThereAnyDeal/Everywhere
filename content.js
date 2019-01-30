@@ -25,8 +25,8 @@ function handleLinks()
 				elementToAppend.textContent = "E";
 				appendAfterFirstText(external_links[i], elementToAppend);
 				
-				elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, { passive: !0 });
-				elementToAppend.addEventListener("mouseleave", OnLeaveExtraElem, { passive: !0 });
+				elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, { passive: true });
+				elementToAppend.addEventListener("mouseleave", OnLeaveExtraElem, { passive: true });
 				
 				external_links[i].dataset.itadHandled = "1";
 			}
@@ -46,8 +46,8 @@ function handleLinks()
 		itad_info_container.appendChild(itad_info_status);
 		document.body.appendChild(itad_info_container);
 		
-		itad_info_container.addEventListener("mouseenter", OnEnterContainer, { passive: !0 });
-		itad_info_container.addEventListener("mouseleave", OnLeaveContainer, { passive: !0 });
+		itad_info_container.addEventListener("mouseenter", OnEnterContainer, { passive: true });
+		itad_info_container.addEventListener("mouseleave", OnLeaveContainer, { passive: true });
 		
 		itad_display_timer = setTimeout(function () { itad_info_container.className += "itad_info_container_hidden"; }, 2000);
 	}
