@@ -9,7 +9,7 @@ function handleLinks()
 {
 	if (location.href.indexOf("isthereanydeal.com") == -1)
 	{
-		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not(.itadhandled)');
+		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])');
 		for (var i = 0; i < external_links.length; i++) 
 		{
 			let appIDs = external_links[i].href.match(/\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/);
@@ -28,7 +28,7 @@ function handleLinks()
 				elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, { passive: !0 });
 				elementToAppend.addEventListener("mouseleave", OnLeaveExtraElem, { passive: !0 });
 				
-				external_links[i].classList.add("itadhandled");
+				external_links[i].dataset.itadHandled = "1";
 			}
 		}
 	}
@@ -108,15 +108,15 @@ function getItemInfo(e, currentInfoElemId)
 				{
 					var price_cut_output = '';
 					if(itad_item['price']['cut'] != 0) price_cut_output = '<div class="itad_info_elem_cut">' + Icon.price + ' -'+itad_item['price']['cut']+'%</div>';
-					
-					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['price']['url']+'" class="itadhandled itad_info_elem_price">';
+
+					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['price']['url']+'" data-itad-handled="1" class="itad_info_elem_price">';
 					itad_info_output += 'Best price now:<div class="itad_info_elem_highlighted">'+price_cut_output+itad_item['price']['price_formatted']+'</div> at '+itad_item['price']['store'];
                     itad_info_output += '</a>';
 				} else {
 
-                    itad_info_output += '<span class="itadhandled itad_info_elem_btn itad_info_elem_btn--noprice">No current price found</span>';
+                    itad_info_output += '<span data-itad-handled="1" class="itad_info_elem_btn itad_info_elem_btn--noprice">No current price found</span>';
                 }
-				
+
 				if(itad_item && itad_item['urls'] && itad_item['urls']['info'])
 				{
 					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['urls']['info']+'" class="itad_info_elem_btn">'+ Icon.deals +' Show all deals</a>';
@@ -130,7 +130,7 @@ function getItemInfo(e, currentInfoElemId)
 					var lowest_url = '';
 					if(itad_item['lowest']['url']) lowest_url = 'href="'+itad_item['lowest']['url']+'"';
 					
-					itad_info_output += '<a target="_blank" rel="noopener" '+lowest_url+' class="itadhandled itad_info_elem_price itad_info_elem_price_lowest">History low:<div class="itad_info_elem_highlighted">'+ Icon.historylow + ' '+price_cut_output+itad_item['lowest']['price_formatted']+'</div>at '+itad_item['lowest']['store']+' '+itad_item['lowest']['recorded_formatted']+'</a>';
+					itad_info_output += '<a target="_blank" rel="noopener" '+lowest_url+' data-itad-handled="1" class="itad_info_elem_price itad_info_elem_price_lowest">History low:<div class="itad_info_elem_highlighted">'+ Icon.historylow + ' '+price_cut_output+itad_item['lowest']['price_formatted']+'</div>at '+itad_item['lowest']['store']+' '+itad_item['lowest']['recorded_formatted']+'</a>';
 				}
 				
 				if(itad_plain && itad_plain.length == 2)
