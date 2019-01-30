@@ -7,7 +7,7 @@ var itad_info_container_header = null;
 
 function handleLinks()
 {
-	if (location.href.indexOf("isthereanydeal.com") == -1)
+	if (location.href.indexOf("isthereanydeal.com") === -1)
 	{
 		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])');
 		for (var i = 0; i < external_links.length; i++) 
@@ -15,14 +15,14 @@ function handleLinks()
 			let appIDs = external_links[i].href.match(/\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/);
 			let appID = null;
 			
-			if(appIDs && appIDs.length == 3) appID = appIDs[2];
+			if (appIDs && appIDs.length === 3) appID = appIDs[2];
 			
 			if (appID)
 			{
 				const elementToAppend = document.createElement('span');
 				elementToAppend.dataset.idforitad = appIDs[1] + '/' + appIDs[2];
-				elementToAppend.className += "itad_extra_elem";
-				elementToAppend.innerHTML = Icon.main;
+				elementToAppend.className += "itad_everywhere";
+				elementToAppend.textContent = "E";
 				appendAfterFirstText(external_links[i], elementToAppend);
 				
 				elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, { passive: !0 });
@@ -33,7 +33,7 @@ function handleLinks()
 		}
 	}
 	
-	if(itad_included && itad_info_container === null)
+	if (itad_included && itad_info_container === null)
 	{
 		itad_info_container = document.createElement('div');
 		itad_info_container.id = "itad_info_container";
@@ -42,7 +42,7 @@ function handleLinks()
 		itad_info_container.appendChild(itad_info_container_header);
 		itad_info_status = document.createElement('div');
 		itad_info_status.id = "itad_info_status";
-		itad_info_status.innerHTML = "ITAD Ready...<br/>"+Icon.spinner;
+		itad_info_status.innerHTML = "Loading...";
 		itad_info_container.appendChild(itad_info_status);
 		document.body.appendChild(itad_info_container);
 		
@@ -78,7 +78,7 @@ function getItemInfo(e, currentInfoElemId)
 	clearTimeout(itad_request_timer);
 	itad_request_timer = setTimeout(function () {
 		
-		var feedURL = "https://api.isthereanydeal.com/v01/game/overview/?key="+ITAD_API_KEY+"&plains=&shop=steam&ids="+encodeURIComponent(e.target.dataset.idforitad);
+		var feedURL = "https://api.isthereanydeal.com/v01/game/overview/?key="+ITAD_API_KEY+"&shop=steam&ids="+encodeURIComponent(e.target.dataset.idforitad);
 		var xhr1 = new XMLHttpRequest();
 		xhr1.open("GET", feedURL, true);
 		xhr1.onreadystatechange = function () {
@@ -107,7 +107,7 @@ function getItemInfo(e, currentInfoElemId)
 				if(itad_item && itad_item['price'])
 				{
 					var price_cut_output = '';
-					if(itad_item['price']['cut'] != 0) price_cut_output = '<div class="itad_info_elem_cut">' + Icon.price + ' -'+itad_item['price']['cut']+'%</div>';
+					if(itad_item['price']['cut'] != 0) price_cut_output = '<div class="itad_info_elem_cut">-'+itad_item['price']['cut']+'%</div>';
 
 					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['price']['url']+'" data-itad-handled="1" class="itad_info_elem_price">';
 					itad_info_output += 'Best price now:<div class="itad_info_elem_highlighted">'+price_cut_output+itad_item['price']['price_formatted']+'</div> at '+itad_item['price']['store'];
@@ -119,7 +119,7 @@ function getItemInfo(e, currentInfoElemId)
 
 				if(itad_item && itad_item['urls'] && itad_item['urls']['info'])
 				{
-					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['urls']['info']+'" class="itad_info_elem_btn">'+ Icon.deals +' Show all deals</a>';
+					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['urls']['info']+'" class="itad_info_elem_btn">Show all deals</a>';
 				}
 				
 				if(itad_item && itad_item['lowest'])
@@ -130,22 +130,22 @@ function getItemInfo(e, currentInfoElemId)
 					var lowest_url = '';
 					if(itad_item['lowest']['url']) lowest_url = 'href="'+itad_item['lowest']['url']+'"';
 					
-					itad_info_output += '<a target="_blank" rel="noopener" '+lowest_url+' data-itad-handled="1" class="itad_info_elem_price itad_info_elem_price_lowest">History low:<div class="itad_info_elem_highlighted">'+ Icon.historylow + ' '+price_cut_output+itad_item['lowest']['price_formatted']+'</div>at '+itad_item['lowest']['store']+' '+itad_item['lowest']['recorded_formatted']+'</a>';
+					itad_info_output += '<a target="_blank" rel="noopener" '+lowest_url+' data-itad-handled="1" class="itad_info_elem_price itad_info_elem_price_lowest">History low:<div class="itad_info_elem_highlighted">'+price_cut_output+itad_item['lowest']['price_formatted']+'</div>at '+itad_item['lowest']['store']+' '+itad_item['lowest']['recorded_formatted']+'</a>';
 				}
 				
 				if(itad_plain && itad_plain.length == 2)
 				{
-					itad_info_output += '<a target="_blank" rel="noopener" href="https://isthereanydeal.com/#/page:game/wait?plain='+itad_plain[1]+'" class="itad_info_elem_btn">'+ Icon.waitlist +' Wait for better price</a>';
+					itad_info_output += '<a target="_blank" rel="noopener" href="https://isthereanydeal.com/#/page:game/wait?plain='+itad_plain[1]+'" class="itad_info_elem_btn">Wait for better price</a>';
 				}
 				
 				if(itad_item && itad_item['urls'] && itad_item['urls']['history'])
 				{
-					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['urls']['history']+'" class="itad_info_elem_btn">' + Icon.history + ' Price history</a>';
+					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['urls']['history']+'" class="itad_info_elem_btn">Price history</a>';
 				}
 				
 				if(steamappid && steamappid.length == 2)
 				{
-					itad_info_output += '<a target="_blank" rel="noopener" href="http://steampeek.hu?appid='+steamappid[1]+'#itadext" class="itad_info_elem_btn">' + Icon.similar + ' Browse similar games</a>';
+					itad_info_output += '<a target="_blank" rel="noopener" href="http://steampeek.hu?appid='+steamappid[1]+'#itadext" class="itad_info_elem_btn">Browse similar games</a>';
 				}
 				
 				var itad_info_elem = document.createElement("div");
@@ -159,7 +159,7 @@ function getItemInfo(e, currentInfoElemId)
 				else
 				{
 					itad_info_elem.classList.add("noinfo");
-					itad_info_elem.innerHTML = '<div class="itad_info_elem_info">Currently there is no information for this game.<br/><br/>You can visit our site and browse all deals:</div><a class="itad_info_elem_btn" target="_blank" rel="noopener" href="https://isthereanydeal.com/">'+Icon.main+' Trending deals</a>';
+					itad_info_elem.innerHTML = '<div class="itad_info_elem_info">Currently there is no information for this game.<br/><br/>You can visit our site and browse all deals:</div><a class="itad_info_elem_btn" target="_blank" rel="noopener" href="https://isthereanydeal.com/">Trending deals</a>';
 				}
 				
 				if(!document.getElementById(b))
@@ -202,7 +202,7 @@ function OnEnterExtraElem(e)
 	}
 	else
 	{
-		itad_info_status.innerHTML = "ITAD working...<br/>"+Icon.spinner;
+		itad_info_status.innerHTML = "Loading...";
 		getItemInfo(e, currentInfoElemId);
 	}
 	

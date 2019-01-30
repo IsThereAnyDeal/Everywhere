@@ -1,20 +1,25 @@
-.itad_extra_elem {
+span.itad_everywhere {
 	all: initial !important;
 	visibility: inherit !important;
 	opacity: inherit !important;
-	font-size: inherit !important;
 	pointer-events: inherit !important;
 	margin: 0 4px !important;
     display:inline-block !important;
     text-decoration: none !important;
-}
-.itad_extra_elem {
-    text-decoration: none !important;
+    font-family:'Arial', sans-serif !important;
+    color:#2196f3 !important;
+    background: #1a1c21 !important;
+    font-weight:bold !important;
+    border:1px solid black !important;
+    border-radius:2px !important;
+    font-size:0.95em !important;
+    padding: 1px 2px !important;
+    line-height:0.95 !important;
 }
 
 #itad_info_container {
     all: initial;
-    font-family: sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #1a1c21;
     padding: 2px;
     font-size: 12px;
