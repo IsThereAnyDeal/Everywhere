@@ -9,7 +9,7 @@ function handleLinks()
 {
 	if (location.href.indexOf("isthereanydeal.com") === -1)
 	{
-		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/(app|apps|sub|bundle)\/([0-9]+)"]:not([data-itad-handled="1"])');
+		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])');
 		for (var i = 0; i < external_links.length; i++) 
 		{
 			let appIDs = external_links[i].href.match(/\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/);
