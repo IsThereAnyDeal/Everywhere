@@ -10,7 +10,7 @@ function handleLinks()
 	if (location.href.indexOf("isthereanydeal.com") === -1)
 	{
 		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])');
-		for (var i = 0; i < external_links.length; i++) 
+		for (var i = 0; i < external_links.length; i++)
 		{
 			let appIDs = external_links[i].href.match(/\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/);
 			let appID = null;
@@ -21,7 +21,7 @@ function handleLinks()
 			{
 				const elementToAppend = document.createElement('span');
 				elementToAppend.dataset.itadId = appIDs[1] + '/' + appIDs[2];
-				elementToAppend.className += "itad_everywhere";
+				elementToAppend.classList.add("itad_everywhere");
 				elementToAppend.textContent = "E";
 				appendAfterFirstText(external_links[i], elementToAppend);
 				
@@ -49,7 +49,7 @@ function handleLinks()
 		itad_info_container.addEventListener("mouseenter", OnEnterContainer, { passive: true });
 		itad_info_container.addEventListener("mouseleave", OnLeaveContainer, { passive: true });
 		
-		itad_display_timer = setTimeout(function () { itad_info_container.className += "itad_info_container_hidden"; }, 2000);
+		itad_display_timer = setTimeout(function () { itad_info_container.classList.add("itad_info_container_hidden"); }, 2000);
 	}
 }
 
@@ -77,7 +77,7 @@ function getItemInfo(e, currentInfoElemId)
 {
 	clearTimeout(itad_request_timer);
 	itad_request_timer = setTimeout(function () {
-		
+
 		var feedURL = "https://api.isthereanydeal.com/v01/game/overview/?key="+ITAD_API_KEY+"&shop=steam&ids="+encodeURIComponent(e.target.dataset.itadId);
 		var xhr1 = new XMLHttpRequest();
 		xhr1.open("GET", feedURL, true);
@@ -91,14 +91,14 @@ function getItemInfo(e, currentInfoElemId)
 			if (xhr1.readyState == 4 && xhr1.status == 200)
 			{
 				var result = xhr1.responseText.replace(/(<([^>]+)>)/ig, "");
-				var result = JSON.parse(result);
-				
+				result = JSON.parse(result);
+
 				var itad_info_output = '';
 				var keyvalue = Object.keys(result['data'])[0];
 				var itad_item = result['data'][keyvalue];
 				var itad_plain = '';
 				var steamappid = b.match(/app-([0-9]+)/);
-				
+
 				if(itad_item && itad_item['urls'] && itad_item['urls']['info'])
 				{
 					itad_plain = itad_item['urls']['info'].match(/isthereanydeal.com\/game\/(\w+)\/info/);
@@ -126,7 +126,7 @@ function getItemInfo(e, currentInfoElemId)
 				{			
 					var price_cut_output = '';
 					if(itad_item['lowest']['cut'] != 0) price_cut_output = '<div class="itad_info_elem_cut">-'+itad_item['lowest']['cut']+'%</div>';
-					
+
 					var lowest_url = '';
 					if(itad_item['lowest']['url']) lowest_url = 'href="'+itad_item['lowest']['url']+'"';
 					
@@ -147,10 +147,10 @@ function getItemInfo(e, currentInfoElemId)
 				{
 					itad_info_output += '<a target="_blank" rel="noopener" href="http://steampeek.hu?appid='+steamappid[1]+'#itadext" class="itad_info_elem_btn">Browse similar games</a>';
 				}
-				
+
 				var itad_info_elem = document.createElement("div");
 				itad_info_elem.id = b;
-				itad_info_elem.className += "itad_info_elem";
+				itad_info_elem.classList.add("itad_info_elem");
 				
 				if(itad_info_output != '')
 				{
@@ -181,9 +181,9 @@ function OnEnterExtraElem(e)
 	
 	clearTimeout(itad_display_timer);
 	itad_info_container.classList.remove("itad_info_container_hidden");
-	
+
 	var currentInfoElemId = "itad_info_elem_" + e.target.dataset.itadId.replace('/','-');
-		
+
 	var divsToHide = document.getElementsByClassName("itad_info_elem");
 	for (var i = 0; i < divsToHide.length; i++)
 	{
@@ -192,9 +192,9 @@ function OnEnterExtraElem(e)
 			divsToHide[i].style.display = "none";
 		}
 	}
-	
+
 	var currentInfoElem = document.getElementById(currentInfoElemId);
-	
+
 	if(currentInfoElem)
 	{
 		itad_info_status.innerHTML = "";
@@ -212,7 +212,7 @@ function OnEnterExtraElem(e)
 function OnLeaveExtraElem(e)
 {
 	if(itad_info_container.classList.contains('itad_info_container_hidden')) clearTimeout(itad_request_timer);
-	itad_display_timer = setTimeout(function () { itad_info_container.className += "itad_info_container_hidden"; }, 200);
+	itad_display_timer = setTimeout(function () { itad_info_container.classList.add("itad_info_container_hidden"); }, 200);
 }
 
 function OnEnterContainer()
@@ -223,13 +223,13 @@ function OnEnterContainer()
 
 function OnLeaveContainer()
 {
-	itad_display_timer = setTimeout(function () { itad_info_container.className += "itad_info_container_hidden"; }, 200);
+	itad_display_timer = setTimeout(function () { itad_info_container.classList.add("itad_info_container_hidden"); }, 200);
 }
 
 function keepInViewPort(elem)
 {
 	var rect = elem.getBoundingClientRect();
-	
+
 	if(rect.bottom + 20 > window.innerHeight) { elem.style.top = (getCoords(elem).top - (rect.bottom - window.innerHeight) - 20) + "px"; }
 	if(rect.right + 20 > window.innerWidth) { elem.style.left = (getCoords(elem).left - (rect.right - window.innerWidth) - 20) + "px"; }
 }
