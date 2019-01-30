@@ -1,16 +1,16 @@
-var itad_request_timer = null;
-var itad_display_timer = null;
-var itad_included = false;
-var itad_info_container = null;
-var itad_info_status = null;
-var itad_info_container_header = null;
+let itad_request_timer = null;
+let itad_display_timer = null;
+let itad_included = false;
+let itad_info_container = null;
+let itad_info_status = null;
+let itad_info_container_header = null;
 
 function handleLinks()
 {
 	if (location.href.indexOf("isthereanydeal.com") === -1)
 	{
-		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])');
-		for (var i = 0; i < external_links.length; i++)
+		const external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])');
+		for (let i = 0; i < external_links.length; i++)
 		{
 			let appIDs = external_links[i].href.match(/\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/);
 			let appID = null;
@@ -78,8 +78,8 @@ function getItemInfo(e, currentInfoElemId)
 	clearTimeout(itad_request_timer);
 	itad_request_timer = setTimeout(function () {
 
-		var feedURL = "https://api.isthereanydeal.com/v01/game/overview/?key="+ITAD_API_KEY+"&shop=steam&ids="+encodeURIComponent(e.target.dataset.itadId);
-		var xhr1 = new XMLHttpRequest();
+		const feedURL = "https://api.isthereanydeal.com/v01/game/overview/?key=" + ITAD_API_KEY + "&shop=steam&ids=" + encodeURIComponent(e.target.dataset.itadId);
+		const xhr1 = new XMLHttpRequest();
 		xhr1.open("GET", feedURL, true);
 		xhr1.onreadystatechange = function () {
 			buildItemInfo(e, currentInfoElemId);
@@ -88,16 +88,16 @@ function getItemInfo(e, currentInfoElemId)
 		
 		function buildItemInfo(a, b)
 		{
-			if (xhr1.readyState == 4 && xhr1.status == 200)
+			if (xhr1.readyState === 4 && xhr1.status === 200)
 			{
-				var result = xhr1.responseText.replace(/(<([^>]+)>)/ig, "");
+				let result = xhr1.responseText.replace(/(<([^>]+)>)/ig, "");
 				result = JSON.parse(result);
 
-				var itad_info_output = '';
-				var keyvalue = Object.keys(result['data'])[0];
-				var itad_item = result['data'][keyvalue];
-				var itad_plain = '';
-				var steamappid = b.match(/app-([0-9]+)/);
+				let itad_info_output = '';
+				const keyvalue = Object.keys(result['data'])[0];
+				const itad_item = result['data'][keyvalue];
+				let itad_plain = '';
+				const steamappid = b.match(/app-([0-9]+)/);
 
 				if(itad_item && itad_item['urls'] && itad_item['urls']['info'])
 				{
@@ -107,7 +107,7 @@ function getItemInfo(e, currentInfoElemId)
 				if(itad_item && itad_item['price'])
 				{
 					var price_cut_output = '';
-					if(itad_item['price']['cut'] != 0) price_cut_output = '<div class="itad_info_elem_cut">-'+itad_item['price']['cut']+'%</div>';
+					if(itad_item['price']['cut'] !== 0) price_cut_output = '<div class="itad_info_elem_cut">-'+itad_item['price']['cut']+'%</div>';
 
 					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['price']['url']+'" data-itad-handled="1" class="itad_info_elem_price">';
 					itad_info_output += 'Best price now:<div class="itad_info_elem_highlighted">'+price_cut_output+itad_item['price']['price_formatted']+'</div> at '+itad_item['price']['store'];
@@ -125,15 +125,15 @@ function getItemInfo(e, currentInfoElemId)
 				if(itad_item && itad_item['lowest'])
 				{			
 					var price_cut_output = '';
-					if(itad_item['lowest']['cut'] != 0) price_cut_output = '<div class="itad_info_elem_cut">-'+itad_item['lowest']['cut']+'%</div>';
+					if(itad_item['lowest']['cut'] !== 0) price_cut_output = '<div class="itad_info_elem_cut">-'+itad_item['lowest']['cut']+'%</div>';
 
-					var lowest_url = '';
+					let lowest_url = '';
 					if(itad_item['lowest']['url']) lowest_url = 'href="'+itad_item['lowest']['url']+'"';
 					
 					itad_info_output += '<a target="_blank" rel="noopener" '+lowest_url+' data-itad-handled="1" class="itad_info_elem_price itad_info_elem_price_lowest">History low:<div class="itad_info_elem_highlighted">'+price_cut_output+itad_item['lowest']['price_formatted']+'</div>at '+itad_item['lowest']['store']+' '+itad_item['lowest']['recorded_formatted']+'</a>';
 				}
 				
-				if(itad_plain && itad_plain.length == 2)
+				if(itad_plain && itad_plain.length === 2)
 				{
 					itad_info_output += '<a target="_blank" rel="noopener" href="https://isthereanydeal.com/#/page:game/wait?plain='+itad_plain[1]+'" class="itad_info_elem_btn">Wait for better price</a>';
 				}
@@ -143,16 +143,16 @@ function getItemInfo(e, currentInfoElemId)
 					itad_info_output += '<a target="_blank" rel="noopener" href="'+itad_item['urls']['history']+'" class="itad_info_elem_btn">Price history</a>';
 				}
 				
-				if(steamappid && steamappid.length == 2)
+				if(steamappid && steamappid.length === 2)
 				{
 					itad_info_output += '<a target="_blank" rel="noopener" href="http://steampeek.hu?appid='+steamappid[1]+'#itadext" class="itad_info_elem_btn">Browse similar games</a>';
 				}
 
-				var itad_info_elem = document.createElement("div");
+				const itad_info_elem = document.createElement("div");
 				itad_info_elem.id = b;
 				itad_info_elem.classList.add("itad_info_elem");
 				
-				if(itad_info_output != '')
+				if(itad_info_output !== '')
 				{
 					itad_info_elem.innerHTML = itad_info_output;
 				}
@@ -175,25 +175,25 @@ function getItemInfo(e, currentInfoElemId)
 
 function OnEnterExtraElem(e)
 {
-	var rect = e.target.getBoundingClientRect();
+	const rect = e.target.getBoundingClientRect();
 	itad_info_container.style.left = (getCoords(e.target).left + (rect.right - rect.left) - 8) + "px";
 	itad_info_container.style.top = (getCoords(e.target).top + (rect.bottom - rect.top) - 8 - 82) + "px";
 	
 	clearTimeout(itad_display_timer);
 	itad_info_container.classList.remove("itad_info_container_hidden");
 
-	var currentInfoElemId = "itad_info_elem_" + e.target.dataset.itadId.replace('/','-');
+	const currentInfoElemId = "itad_info_elem_" + e.target.dataset.itadId.replace('/', '-');
 
-	var divsToHide = document.getElementsByClassName("itad_info_elem");
-	for (var i = 0; i < divsToHide.length; i++)
+	const divsToHide = document.getElementsByClassName("itad_info_elem");
+	for (let i = 0; i < divsToHide.length; i++)
 	{
-		if (divsToHide.id != currentInfoElemId)
+		if (divsToHide.id !== currentInfoElemId)
 		{
 			divsToHide[i].style.display = "none";
 		}
 	}
 
-	var currentInfoElem = document.getElementById(currentInfoElemId);
+	const currentInfoElem = document.getElementById(currentInfoElemId);
 
 	if(currentInfoElem)
 	{
@@ -228,7 +228,7 @@ function OnLeaveContainer()
 
 function keepInViewPort(elem)
 {
-	var rect = elem.getBoundingClientRect();
+	let rect = elem.getBoundingClientRect();
 
 	if(rect.bottom + 20 > window.innerHeight) { elem.style.top = (getCoords(elem).top - (rect.bottom - window.innerHeight) - 20) + "px"; }
 	if(rect.right + 20 > window.innerWidth) { elem.style.left = (getCoords(elem).left - (rect.right - window.innerWidth) - 20) + "px"; }
