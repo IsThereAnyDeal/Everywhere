@@ -20,7 +20,7 @@ function handleLinks()
 			if (appID)
 			{
 				const elementToAppend = document.createElement('span');
-				elementToAppend.dataset.idforitad = appIDs[1] + '/' + appIDs[2];
+				elementToAppend.dataset.itadId = appIDs[1] + '/' + appIDs[2];
 				elementToAppend.className += "itad_everywhere";
 				elementToAppend.textContent = "E";
 				appendAfterFirstText(external_links[i], elementToAppend);
@@ -78,7 +78,7 @@ function getItemInfo(e, currentInfoElemId)
 	clearTimeout(itad_request_timer);
 	itad_request_timer = setTimeout(function () {
 		
-		var feedURL = "https://api.isthereanydeal.com/v01/game/overview/?key="+ITAD_API_KEY+"&shop=steam&ids="+encodeURIComponent(e.target.dataset.idforitad);
+		var feedURL = "https://api.isthereanydeal.com/v01/game/overview/?key="+ITAD_API_KEY+"&shop=steam&ids="+encodeURIComponent(e.target.dataset.itadId);
 		var xhr1 = new XMLHttpRequest();
 		xhr1.open("GET", feedURL, true);
 		xhr1.onreadystatechange = function () {
@@ -182,7 +182,7 @@ function OnEnterExtraElem(e)
 	clearTimeout(itad_display_timer);
 	itad_info_container.classList.remove("itad_info_container_hidden");
 	
-	var currentInfoElemId = "itad_info_elem_" + e.target.dataset.idforitad.replace('/','-');
+	var currentInfoElemId = "itad_info_elem_" + e.target.dataset.itadId.replace('/','-');
 		
 	var divsToHide = document.getElementsByClassName("itad_info_elem");
 	for (var i = 0; i < divsToHide.length; i++)
