@@ -9,7 +9,7 @@ function handleLinks()
 {
 	if (location.href.indexOf("isthereanydeal.com") === -1)
 	{
-		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])');
+		var external_links = document.querySelectorAll('a[href*="//store.steampowered.com/(app|apps|sub|bundle)\/([0-9]+)"]:not([data-itad-handled="1"])');
 		for (var i = 0; i < external_links.length; i++) 
 		{
 			let appIDs = external_links[i].href.match(/\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/);
@@ -244,20 +244,15 @@ function getCoords(elem)
   };
 }
 
-var targetNode = document;
-var config = { attributes: true, childList: true, subtree: true };
-
-var callback = function(mutationsList) {
-    for (var mutation of mutationsList) 
+let observer = new MutationObserver(mutationsList => {
+	for (let mutation of mutationsList)
 	{
-        if (mutation.type == 'childList') 
+		if (mutation.type === 'childList')
 		{
 			handleLinks();
-        }
-    }
-};
+		}
+	}
+});
 
-var observer = new MutationObserver(callback);
-
-observer.observe(targetNode, config);
+observer.observe(document, {childList: true, subtree: true});
 handleLinks();
