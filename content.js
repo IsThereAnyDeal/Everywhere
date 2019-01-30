@@ -42,7 +42,7 @@ function handleLinks()
 		itad_info_container.appendChild(itad_info_container_header);
 		itad_info_status = document.createElement('div');
 		itad_info_status.id = "itad_info_status";
-		itad_info_status.innerHTML = "ITAD Ready...";
+		itad_info_status.innerHTML = "ITAD Ready...<br/>"+Icon.spinner;
 		itad_info_container.appendChild(itad_info_status);
 		document.body.appendChild(itad_info_container);
 		
@@ -151,7 +151,16 @@ function getItemInfo(e, currentInfoElemId)
 				var itad_info_elem = document.createElement("div");
 				itad_info_elem.id = b;
 				itad_info_elem.className += "itad_info_elem";
-				itad_info_elem.innerHTML = itad_info_output;
+				
+				if(itad_info_output != '')
+				{
+					itad_info_elem.innerHTML = itad_info_output;
+				}
+				else
+				{
+					itad_info_elem.classList.add("noinfo");
+					itad_info_elem.innerHTML = '<div class="itad_info_elem_info">Currently there is no information for this game.<br/><br/>You can visit our site and browse all deals:</div><a class="itad_info_elem_btn" target="_blank" rel="noopener" href="https://isthereanydeal.com/">'+Icon.main+' Trending deals</a>';
+				}
 				
 				if(!document.getElementById(b))
 				{
@@ -193,7 +202,7 @@ function OnEnterExtraElem(e)
 	}
 	else
 	{
-		itad_info_status.innerHTML = "ITAD working...";
+		itad_info_status.innerHTML = "ITAD working...<br/>"+Icon.spinner;
 		getItemInfo(e, currentInfoElemId);
 	}
 	
