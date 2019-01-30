@@ -15,7 +15,7 @@
 #itad_info_container {
     all: initial;
     font-family: sans-serif;
-    background-color: #036db1;
+    background-color: #1a1c21;
     padding: 2px;
     font-size: 12px;
 	width: 190px;
@@ -44,15 +44,17 @@
 
 #itad_info_container a {
 	text-decoration: none;
+    border-bottom:1px solid transparent;
 }
 
-#itad_info_container a:link:hover {
-	color: #2196F3;
+#itad_info_container a:hover {
+    color:white;
+	border-color: #2196f3;
 }
 
 #itad_info_container_header {
-	color: #ccc !important;
-	font-size: 0.95em;
+	color: white;
+    font-size: 0.95em;
 	padding: 2px;
 	display: inline-block;
 }
@@ -64,18 +66,13 @@
 }
 
 .itad_info_elem_price {
-	background-color: #FFF8E1;
+	background-color: #31333a;
     font-size: 0.92em;
     padding: 4px;
 	margin: 2px 4px;
 	display: block;
     font-weight: normal;
-    color: #d2691e;
 	border-radius: 2px;
-}
-
-.itad_info_elem_price_lowest {
-	color: #0d47a1;
 }
 
 .itad_info_elem_highlighted {
@@ -106,14 +103,14 @@
     font-size: 0.95em;
     font-weight: normal;
     line-height: 20px;
-    color: #333;
+    color: #95969D;
     border-radius: 2px;
-	background-color: #f0f8ff;
+	background-color: #282b33;
     margin: 2px 4px;
 }
 
 .itad_info_elem_btn--noprice {
-    background-color: #f0f8ff;
+    background-color: #282b33;
     display:inline-flex;
     justify-content: center;
     align-items: center;
