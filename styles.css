@@ -55,7 +55,7 @@ span.itad_everywhere {
 
 #itad_info_container a:hover {
     color:white;
-	border-color: #2196f3;
+	background-color: #454957;
 }
 
 #itad_info_container_header {
@@ -63,6 +63,9 @@ span.itad_everywhere {
     font-size: 0.95em;
 	padding: 2px;
 	display: inline-block;
+}
+#itad_info_container_header:hover {
+    background-color:transparent !important;
 }
 
 .itad_info_elem {
