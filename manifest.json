@@ -2,16 +2,18 @@
 	"manifest_version": 2,
 
 	"name": "IsThereAnyDeal Everywhere",
-	"version": "0.9.3",
+	"version": "1.0",
 	"description": "Check game prices and the best deals on all pages with IsThereAnyDeal",
 	
 	"browser_action": {
-		"default_icon": "tab-icon.png",
-		"default_title": "When the price is right, you will play all night"
+		"default_icon": "icon_20.png",
+		"default_title": "IsThereAnyDeal Everywhere"
 	},
 	
 	"icons": {
-		  "128": "extension-icon.png"
+		  "128": "icon_128.png",
+		  "96": "icon_96.png",
+		  "20": "icon_20.png"
 		},
 	
 	"content_scripts": [{
