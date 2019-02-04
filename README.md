@@ -1,16 +1,11 @@
 # IsThereAnyDeal Everywhere
 
-IsThereAnyDeal Everywhere is a browser extension that adds additional info about current best price, historical low price
-and some useful links for every Steam link found on a page you're currently browsing.
+IsThereAnyDeal Everywhere adds a quick price overview for each link to Steam store it can find on a page.
 
-## Where to get it
+A small icon will appear next to each Steam store link. Moving your cursor over it will show you a tooltip that contains current best price and historical lowest price from authorized stores, as tracked by IsThereAnyDeal, as well as some quick and useful links to IsThereAnyDeal and SteamPeek.
 
-This extension is currently in beta and will be released to Chrome Webstore at a later date.
-
-## License
-
-To be done
+Try it on Steam, SteamGifts, Barter.vg or reddit ;)
 
 ## Author
 
-The original author and maintainer of this extension is *Zoltan Wacha*.
+The original author of this extension is [Zoltan Wacha](https://github.com/wzol).
