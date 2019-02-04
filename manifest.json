@@ -4,12 +4,7 @@
 	"name": "IsThereAnyDeal Everywhere",
 	"version": "1.0",
 	"description": "Check game prices and the best deals on all pages with IsThereAnyDeal",
-	
-	"browser_action": {
-		"default_icon": "icon_20.png",
-		"default_title": "IsThereAnyDeal Everywhere"
-	},
-	
+	"homepage_url": "https://everywhere.isthereanydeal.com/",
 	"icons": {
 		  "128": "icon_128.png",
 		  "96": "icon_96.png",
