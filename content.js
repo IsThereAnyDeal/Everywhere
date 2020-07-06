@@ -37,6 +37,9 @@ function handleLinks()
 	{
 		itad_info_container = document.createElement('div');
 		itad_info_container.id = "itad_info_container";
+		itad_info_container.classList.add("itad_info_container_hidden");
+		itad_info_container.style.top = "-500px";
+		itad_info_container.style.left = "-500px";
 		itad_info_container_header = document.createElement('div');
 		itad_info_container_header.innerHTML = "<a id='itad_info_container_header' target='_blank' rel='noopener' href='https://isthereanydeal.com/'>IsThereAnyDeal</a>";
 		itad_info_container.appendChild(itad_info_container_header);
@@ -48,8 +51,6 @@ function handleLinks()
 		
 		itad_info_container.addEventListener("mouseenter", OnEnterContainer, { passive: true });
 		itad_info_container.addEventListener("mouseleave", OnLeaveContainer, { passive: true });
-		
-		itad_display_timer = setTimeout(function () { itad_info_container.classList.add("itad_info_container_hidden"); }, 2000);
 	}
 }
 
