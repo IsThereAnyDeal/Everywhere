@@ -161,8 +161,8 @@ async function buildItemInfo(gameInfo: GameInfo, a: Event, b: string) {
     itad_info_output += priceButton(
       lowest_url,
       "History low:",
-      price_cut_output + itad_item.lowest.price_formatted,
-      itad_item.lowest.store + itad_item.lowest.recorded_formatted
+      price_cut_output + " " + itad_item.lowest.price_formatted,
+      itad_item.lowest.store + " " + itad_item.lowest.recorded_formatted
     );
   }
 
