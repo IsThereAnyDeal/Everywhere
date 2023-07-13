@@ -1,7 +1,7 @@
 import { ITAD_API_KEY } from "./config";
 import GameInfo from "./types/GamePriceOverview";
-import priceButton from "./html/priceButton";
-import infoButton from "./html/infoButton";
+import priceButton from "./components/priceButton";
+import infoButton from "./components/infoButton";
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
 const itad_included = true;

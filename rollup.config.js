@@ -19,7 +19,6 @@ const config = ["content"].map((name) => ({
         { src: "src/manifest.json", dest: "dist" },
         { src: "src/images", dest: "dist" },
         { src: "src/icons", dest: "dist" },
-        { src: "src/html", dest: "dist" },
         { src: "src/css", dest: "dist" },
       ],
     }),
