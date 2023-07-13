@@ -1,4 +1,6 @@
 .idea/
 releases/
 nppBackup/
-config.js
+node_modules/
+dist/
+/src/config.ts

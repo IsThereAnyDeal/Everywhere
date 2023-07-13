@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+  "name": "IsThereAnyDeal Everywhere TS",
+  "version": "2.0",
+  "description": "Check game prices and the best deals on all pages with IsThereAnyDeal",
+  "homepage_url": "https://everywhere.isthereanydeal.com/",
+  "icons": {
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png"
+  },
+
+  "content_scripts": [
+    {
+      "css": ["css/styles.css"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["https://isthereanydeal.com/*", "http://localhost/*"]
+    }
+  ],
+
+  "permissions": ["<all_urls>"],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "jasper@vdb.dev"
+    }
+  }
+}
