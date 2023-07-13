@@ -2,7 +2,7 @@ import { ITAD_API_KEY } from "./config";
 import GameInfo from "./types/GamePriceOverview";
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
-let itad_included = true;
+const itad_included = true;
 let itad_info_container: HTMLDivElement;
 let itad_info_status: HTMLDivElement;
 let itad_info_container_header = null;
@@ -14,16 +14,13 @@ function handleLinks() {
         'a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])'
       );
     for (let i = 0; i < external_links.length; i++) {
-      let appIDs = external_links[i].href.match(
+      const appIDs = external_links[i].href.match(
         /\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/
       );
-      let appID;
-
-      if (appIDs && appIDs.length === 3) appID = appIDs[2];
 
       if (appIDs === null || appIDs === undefined) return;
 
-      if (appID) {
+      if (appIDs && appIDs.length === 3) {
         const elementToAppend = document.createElement("span");
         elementToAppend.dataset.itadId = appIDs[1] + "/" + appIDs[2];
         elementToAppend.classList.add("itad_everywhere");
@@ -235,24 +232,27 @@ async function buildItemInfo(gameInfo: GameInfo, a: Event, b: string) {
 
 function OnEnterExtraElem(e: Event) {
   const target = e.target as HTMLElement;
-  const rect = target.getBoundingClientRect();
+  const itadId = target.dataset.itadId;
+  const { left, top, right, bottom } = target.getBoundingClientRect();
+  const popupOffset = 8; // moves the popup under the cursor
   itad_info_container.style.left =
-    getCoords(target).left + (rect.right - rect.left) - 8 + "px";
+    getCoords(target).left + (right - left) - popupOffset + "px";
   itad_info_container.style.top =
-    getCoords(target).top + (rect.bottom - rect.top) - 8 - 82 + "px";
+    getCoords(target).top + (bottom - top) - popupOffset + "px";
 
   clearTimeout(itad_display_timer);
   itad_info_container.classList.remove("itad_info_container_hidden");
 
-  if (!target.dataset.itadId) return;
+  if (!itadId) return;
 
-  const currentInfoElemId =
-    "itad_info_elem_" + target.dataset.itadId.replace("/", "-");
+  const currentInfoElemId = "itad_info_elem_" + itadId.replace("/", "-");
 
-  const divsToHide = document.getElementsByClassName("itad_info_elem");
-  for (let i = 0; i < divsToHide.length; i++) {
-    if ((divsToHide[i] as HTMLElement).id !== currentInfoElemId) {
-      (divsToHide[i] as HTMLElement).style.display = "none";
+  const divsToHide = document.getElementsByClassName(
+    "itad_info_elem"
+  ) as HTMLCollectionOf<HTMLElement>;
+  for (const div of divsToHide) {
+    if (div.id !== currentInfoElemId) {
+      div.style.display = "none";
     }
   }
 
@@ -326,10 +326,10 @@ function debounce(func: () => void, wait: number) {
   };
 }
 
-let debouncedHandleLinks = debounce(handleLinks, 500);
+const debouncedHandleLinks = debounce(handleLinks, 500);
 
-let observer = new MutationObserver((mutationsList) => {
-  for (let mutation of mutationsList) {
+const observer = new MutationObserver((mutationsList) => {
+  for (const mutation of mutationsList) {
     if (mutation.type === "childList") {
       debouncedHandleLinks();
     }
