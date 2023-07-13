@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "typeRoots": ["node_modules/@types"],
+    "rootDir": "src",
+    "outDir": "dist",
+    "strict": true,
+    "declaration": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {},
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules"]
+}
