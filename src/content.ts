@@ -6,7 +6,6 @@ let itad_display_timer: NodeJS.Timeout;
 const itad_included = true;
 let itad_info_container: HTMLDivElement;
 let itad_info_status: HTMLDivElement;
-let itad_info_container_header = null;
 
 function handleLinks() {
   if (location.href.indexOf("isthereanydeal.com") === -1) {
@@ -40,22 +39,22 @@ function handleLinks() {
     }
   }
 
-  if (itad_included && itad_info_container === undefined) {
-    itad_info_container = document.createElement("div");
-    itad_info_container.id = "itad_info_container";
-    // hide by default (#6)
-    itad_info_container.classList.add("itad_info_container_hidden");
-    itad_info_container.style.top = "-500px";
-    itad_info_container.style.left = "-500px";
+  if (itad_included && !itad_info_container) {
+    // Create HTML string
+    const itadContainerHTML = `
+      <div id="itad_info_container" class="itad_info_container_hidden">
+        <div id="itad_info_container_header">
+          <a target="_blank" rel="noopener" href="https://isthereanydeal.com/">IsThereAnyDeal</a>
+        </div>
+        <div id="itad_info_status">Loading...</div>
+      </div>
+    `;
 
-    itad_info_container_header = document.createElement("div");
-    itad_info_container_header.innerHTML =
-      "<a id='itad_info_container_header' target='_blank' rel='noopener' href='https://isthereanydeal.com/'>IsThereAnyDeal</a>";
-    itad_info_container.appendChild(itad_info_container_header);
-    itad_info_status = document.createElement("div");
-    itad_info_status.id = "itad_info_status";
-    itad_info_status.innerHTML = "Loading...";
-    itad_info_container.appendChild(itad_info_status);
+    const doc = new DOMParser().parseFromString(itadContainerHTML, "text/html");
+
+    itad_info_container = doc.body.firstChild as HTMLDivElement;
+    itad_info_status = itad_info_container.children[1] as HTMLDivElement;
+
     document.body.appendChild(itad_info_container);
 
     itad_info_container.addEventListener("mouseenter", OnEnterContainer, {
