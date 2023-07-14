@@ -1,7 +1,6 @@
 import { ITAD_API_KEY } from "./config";
 import GameInfo from "./types/GamePriceOverview";
-import priceButton from "./components/priceButton";
-import infoButton from "./components/infoButton";
+import itadButton from "./components/itadButton";
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
 const itad_included = true;
@@ -125,61 +124,58 @@ async function buildItemInfo(gameInfo: GameInfo, a: Event, b: string) {
 
   if (!itad_item) throw new Error("No data found for the given game id");
 
-  let itad_plain = "";
-
   const steamappid = b.match(/app-([0-9]+)/);
 
-  if (itad_item.urls.info) itad_plain = itad_item.urls.info;
-
   if (itad_item.price) {
-    var price_cut_output = "";
-    if (itad_item.price.cut !== 0)
-      price_cut_output =
-        '<div class="itad_info_elem_cut">-' + itad_item.price.cut + "%</div>";
-
-    itad_info_output += priceButton(
-      itad_item.price.url ? itad_item.price.url : "",
-      "Best price now:",
-      price_cut_output + itad_item.price.price_formatted,
-      itad_item.price.store
-    );
+    itad_info_output += itadButton({
+      url: itad_item.price.url ? itad_item.price.url : "",
+      superText: "Best price now:",
+      discount: itad_item.price.cut,
+      text: itad_item.price.price_formatted,
+      subText: itad_item.price.store,
+    });
   } else
     itad_info_output +=
       '<span data-itad-handled="1" class="itad_info_elem_btn itad_info_elem_btn--noprice">No current price found</span>';
 
   if (itad_item.urls.info)
-    itad_info_output += infoButton(itad_item.urls.info, "Show all deals");
+    itad_info_output += itadButton({
+      url: itad_item.urls.info,
+      text: "Show all deals",
+    });
 
   if (itad_item.lowest) {
-    var price_cut_output = "";
-    if (itad_item.lowest.cut !== 0)
-      price_cut_output = `<div class="itad_info_elem_cut">-${itad_item.lowest.cut}%</div>`;
-
-    let lowest_url = "";
-    if (itad_item.lowest.url) lowest_url = `href= ${itad_item.lowest.url}"`;
-
-    itad_info_output += priceButton(
-      lowest_url,
-      "History low:",
-      price_cut_output + " " + itad_item.lowest.price_formatted,
-      itad_item.lowest.store + " " + itad_item.lowest.recorded_formatted
-    );
+    itad_info_output += itadButton({
+      url: itad_item.lowest.url,
+      superText: "History low:",
+      discount: itad_item.lowest.cut,
+      text: itad_item.lowest.price_formatted,
+      subText:
+        itad_item.lowest.store + " " + itad_item.lowest.recorded_formatted,
+    });
   }
 
-  if (itad_plain.length === 2)
-    itad_info_output += infoButton(
-      `https://isthereanydeal.com/#/page:game/wait?plain=${itad_plain[1]}`,
-      "Wait for better price"
-    );
+  const itad_plain = itad_item.urls.info.match(
+    /isthereanydeal.com\/game\/(\w+)\/info/
+  );
+  if (itad_plain?.length === 2) {
+    itad_info_output += itadButton({
+      url: `https://isthereanydeal.com/#/page:game/wait?plain=${itad_plain[1]}`,
+      text: "Wait for better price",
+    });
+  }
 
   if (itad_item.urls.history)
-    itad_info_output += infoButton(itad_item.urls.history, "Price history");
+    itad_info_output += itadButton({
+      url: itad_item.urls.history,
+      text: "Price history",
+    });
 
   if (steamappid && steamappid.length === 2)
-    itad_info_output += infoButton(
-      `http://steampeek.hu?appid=${steamappid[1]}#itadext`,
-      "Browse similar games"
-    );
+    itad_info_output += itadButton({
+      url: `http://steampeek.hu?appid=${steamappid[1]}#itadext`,
+      text: "Browse similar games",
+    });
 
   const itad_info_elem = document.createElement("div");
   itad_info_elem.id = b;
@@ -189,7 +185,7 @@ async function buildItemInfo(gameInfo: GameInfo, a: Event, b: string) {
   else {
     itad_info_elem.classList.add("noinfo");
     itad_info_elem.innerHTML = `<div class="itad_info_elem_info">Currently there is no information for this game.<br/><br/>You can visit our site and browse all deals:
-			${infoButton("https://isthereanydeal.com/", "Trending deals")}`;
+			${itadButton({ url: "https://isthereanydeal.com/", text: "Trending deals" })}`;
   }
 
   if (!document.getElementById(b))

@@ -11,7 +11,7 @@ type Price = {
   cut: number;
   price: number;
   price_formatted: string;
-  url: string | null;
+  url: string | undefined;
   drm: string[];
 };
 
@@ -20,7 +20,7 @@ type Lowest = {
   cut: number;
   price: number;
   price_formatted: string;
-  url: string | null;
+  url: string | undefined;
   recorded: number;
   recorded_formatted: string;
 };
