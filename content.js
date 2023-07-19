@@ -244,15 +244,30 @@ function getCoords(elem)
   };
 }
 
-let observer = new MutationObserver(mutationsList => {
-	for (let mutation of mutationsList)
-	{
-		if (mutation.type === 'childList')
-		{
-			handleLinks();
+function debounce(func, wait) {
+	var timeout;
+	
+	return function executedFunction() {
+		var later = function() {
+			clearTimeout(timeout);
+			func();
+		};
+		
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+	};
+}
+
+var debouncedHandleLinks = debounce(handleLinks, 500);
+
+var observer = new MutationObserver(function(mutationsList) {
+	for (var mutation of mutationsList) {
+		if (mutation.type === 'childList') {
+			debouncedHandleLinks();
 		}
 	}
 });
 
 observer.observe(document, {childList: true, subtree: true});
 handleLinks();
+
