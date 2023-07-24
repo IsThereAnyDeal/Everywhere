@@ -15,30 +15,41 @@ const itad_included = true;
 let itad_info_container: HTMLDivElement;
 let itad_info_status: HTMLDivElement;
 
+const blacklist = [
+  "isthereanydeal.com",
+  "chat.openai.com",
+  "store.steampowered.com/account/licenses/", // issue #1
+];
+
+for (const blacklisted of blacklist) {
+  if (location.href.indexOf(blacklisted) !== -1) {
+    // stop script from running
+    throw new Error("ITAD Everywhere disabled on " + blacklisted);
+  }
+}
+
 function handleLinks() {
-  if (location.href.indexOf("isthereanydeal.com") === -1) {
-    const external_links: NodeListOf<HTMLAnchorElement> =
-      document.querySelectorAll(
-        'a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])'
-      );
-    for (let i = 0; i < external_links.length; i++) {
+  const external_links: NodeListOf<HTMLAnchorElement> =
+    document.querySelectorAll(
+      'a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])'
+    );
+  for (let i = 0; i < external_links.length; i++) {
     let appIDs = external_links[i].href.match(
-        /\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/
-      );
+      /\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/
+    );
 
     if (appIDs && appIDs?.length >= 3) {
       const elementToAppend = itadInlineIcon(appIDs);
-        appendAfterFirstText(external_links[i], elementToAppend);
+      appendAfterFirstText(external_links[i], elementToAppend);
 
-        elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, {
-          passive: true,
-        });
-        elementToAppend.addEventListener("mouseleave", OnLeaveExtraElem, {
-          passive: true,
-        });
+      elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, {
+        passive: true,
+      });
+      elementToAppend.addEventListener("mouseleave", OnLeaveExtraElem, {
+        passive: true,
+      });
 
-        external_links[i].dataset.itadHandled = "1";
-      }
+      external_links[i].dataset.itadHandled = "1";
     }
   }
 
