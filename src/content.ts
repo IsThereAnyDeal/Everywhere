@@ -11,7 +11,6 @@ import {
 import itadInlineIcon from "./components/itadInlineIcon";
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
-const itad_included = true;
 let itad_info_container: HTMLDivElement;
 let itad_info_status: HTMLDivElement;
 
@@ -53,7 +52,7 @@ function handleLinks() {
     }
   }
 
-  if (itad_included && !itad_info_container) {
+  if (!itad_info_container) {
     const { container, status } = itadContainer();
 
     itad_info_container = container;
