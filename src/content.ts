@@ -22,7 +22,7 @@ function handleLinks() {
         'a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])'
       );
     for (let i = 0; i < external_links.length; i++) {
-      const appIDs = external_links[i].href.match(
+    let appIDs = external_links[i].href.match(
         /\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/
       );
 
