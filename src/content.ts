@@ -8,6 +8,7 @@ import {
   getCoords,
   appendAfterFirstText,
 } from "./utils";
+import itadInlineIcon from "./components/itadInlineIcon";
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
 const itad_included = true;
@@ -25,13 +26,8 @@ function handleLinks() {
         /\/\/store.steampowered.com\/(app|apps|sub|bundle)\/([0-9]+)/
       );
 
-      if (appIDs === null || appIDs === undefined) return;
-
-      if (appIDs && appIDs.length === 3) {
-        const elementToAppend = document.createElement("span");
-        elementToAppend.dataset.itadId = appIDs[1] + "/" + appIDs[2];
-        elementToAppend.classList.add("itad_everywhere");
-        elementToAppend.textContent = "E";
+    if (appIDs && appIDs?.length >= 3) {
+      const elementToAppend = itadInlineIcon(appIDs);
         appendAfterFirstText(external_links[i], elementToAppend);
 
         elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, {
