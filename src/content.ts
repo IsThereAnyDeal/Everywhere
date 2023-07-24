@@ -1,6 +1,12 @@
 import { ITAD_API_KEY } from "./config";
 import GameInfo from "./types/GamePriceOverview";
 import itadButton from "./components/itadButton";
+import {
+  debounce,
+  keepInViewPort,
+  getCoords,
+  appendAfterFirstText,
+} from "./utils";
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
 const itad_included = true;
@@ -66,28 +72,6 @@ function handleLinks() {
   }
 }
 
-function appendAfterFirstText(
-  parentElement: HTMLAnchorElement,
-  elementToAppend: HTMLSpanElement
-) {
-  for (const childElement of parentElement.childNodes) {
-    if (childElement === null || childElement.textContent === null) continue;
-    if (
-      (childElement.nodeType === Node.TEXT_NODE &&
-        childElement.textContent?.trim().length > 0) ||
-      childElement.nodeName === "I"
-    ) {
-      parentElement.insertBefore(elementToAppend, childElement.nextSibling);
-      return true;
-    }
-
-    if (
-      appendAfterFirstText(childElement as HTMLAnchorElement, elementToAppend)
-    )
-      return true;
-  }
-  return false;
-}
 function getItemInfo(e: Event, currentInfoElemId: string) {
   clearTimeout(itad_request_timer);
   itad_request_timer = setTimeout(async function () {
@@ -254,50 +238,10 @@ function OnLeaveContainer() {
   }, 200);
 }
 
-function keepInViewPort(elem: EventTarget) {
-  const element = elem as HTMLDivElement;
-  const rect = element.getBoundingClientRect();
-
-  if (rect.bottom + 20 > window.innerHeight) {
-    element.style.top =
-      getCoords(element).top - (rect.bottom - window.innerHeight) - 20 + "px";
-  }
-  if (rect.right + 20 > window.innerWidth) {
-    element.style.left =
-      getCoords(element).left - (rect.right - window.innerWidth) - 20 + "px";
-  }
-}
-
-function getCoords(elem: EventTarget) {
-  const element = elem as HTMLDivElement;
-  const rect = element.getBoundingClientRect();
-
-  return {
-    top: rect.top + scrollY,
-    left: rect.left + scrollX,
-  };
-}
-
-function debounce(func: () => void, wait: number) {
-  let timeout: ReturnType<typeof setTimeout>;
-
-  return function executedFunction() {
-    const later = () => {
-      clearTimeout(timeout);
-      func();
-    };
-
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-const debouncedHandleLinks = debounce(handleLinks, 500);
-
 const observer = new MutationObserver((mutationsList) => {
   for (const mutation of mutationsList) {
     if (mutation.type === "childList") {
-      debouncedHandleLinks();
+      debounce(handleLinks, 500);
     }
   }
 });
