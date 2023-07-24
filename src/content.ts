@@ -1,5 +1,6 @@
 import { ITAD_API_KEY } from "./config";
 import GameInfo from "./types/GamePriceOverview";
+import itadContainer from "./components/itadContainer";
 import itadButton from "./components/itadButton";
 import {
   debounce,
@@ -46,20 +47,10 @@ function handleLinks() {
   }
 
   if (itad_included && !itad_info_container) {
-    // Create HTML string
-    const itadContainerHTML = `
-      <div id="itad_info_container" class="itad_info_container_hidden">
-        <div id="itad_info_container_header">
-          <a target="_blank" rel="noopener" href="https://isthereanydeal.com/">IsThereAnyDeal</a>
-        </div>
-        <div id="itad_info_status">Loading...</div>
-      </div>
-    `;
+    const { container, status } = itadContainer();
 
-    const doc = new DOMParser().parseFromString(itadContainerHTML, "text/html");
-
-    itad_info_container = doc.body.firstChild as HTMLDivElement;
-    itad_info_status = itad_info_container.children[1] as HTMLDivElement;
+    itad_info_container = container;
+    itad_info_status = status;
 
     document.body.appendChild(itad_info_container);
 

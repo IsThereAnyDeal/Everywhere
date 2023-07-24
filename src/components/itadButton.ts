@@ -51,3 +51,4 @@ const itadButton = (props: ItadButtonProps) => {
 };
 
 export default itadButton;
+export type { ItadButtonProps };
