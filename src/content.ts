@@ -163,10 +163,12 @@ function OnLeaveContainer() {
   }, 200);
 }
 
+let debouncedHandleLinks = debounce(handleLinks, 500);
+
 const observer = new MutationObserver((mutationsList) => {
   for (const mutation of mutationsList) {
     if (mutation.type === "childList") {
-      debounce(handleLinks, 500);
+      debouncedHandleLinks();
     }
   }
 });
