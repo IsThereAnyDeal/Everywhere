@@ -165,9 +165,25 @@ function OnLeaveContainer() {
 
 let debouncedHandleLinks = debounce(handleLinks, 500);
 
+function isPartOfIgnoredElement(
+  node: Node | null,
+  ignoredElementId: string
+): boolean {
+  if ((node as HTMLElement)?.id === ignoredElementId) {
+    return true;
+  }
+
+  return node?.parentNode
+    ? isPartOfIgnoredElement(node.parentNode, ignoredElementId)
+    : false;
+}
+
 const observer = new MutationObserver((mutationsList) => {
   for (const mutation of mutationsList) {
-    if (mutation.type === "childList") {
+    if (
+      mutation.type === "childList" &&
+      !isPartOfIgnoredElement(mutation.target, "itad_info_container")
+    ) {
       debouncedHandleLinks();
     }
   }
