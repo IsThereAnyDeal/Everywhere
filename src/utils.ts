@@ -84,8 +84,14 @@ function appendAfterFirstText(
       textNode.parentNode?.appendChild(elementToAppend);
     }
   } else {
+    // check if the parent node has a image node directly in it
+    const hasImage = Array.from(parentElement.childNodes).some(
+      (node) => node.nodeName === "IMG"
+    );
     // If no suitable text node is found, append to the parent node itself
-    parentElement.appendChild(elementToAppend);
+    // except if there is an image node directly in it
+    if (!hasImage) parentElement.appendChild(elementToAppend);
+    else return false;
   }
 
   // Return true, since the element is appended in any case
