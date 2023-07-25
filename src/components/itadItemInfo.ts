@@ -5,11 +5,21 @@ const itadItemInfo = (gameInfo: GameInfo, a: Event, b: string) => {
   let itad_info_output = "";
   const result = gameInfo.data;
 
-  const appId = b.match(/app-([0-9]+)/)?.[1];
-  if (!appId) throw new Error("Invalid game id"); // should probably be the status instead
+  const { type, appId } = (() => {
+    const match = b.match(/(app|apps|sub|bundle)-([0-9]+)/);
+    // first should be the type, second the id
+    if (match && match.length >= 3) {
+      return { type: match[1], appId: match[2] };
+    } else {
+      return { type: null, appId: null };
+    }
+  })();
 
-  const itad_item = result[`app/${appId}`];
-  if (!itad_item) throw new Error("No data found for the given game id"); // should probably be the status instead
+  if (!appId) throw new Error("Invalid game id"); // should probably be used in the status instead
+  if (!type) throw new Error("Invalid game type"); // should probably be used in the status instead
+
+  const itad_item = result[`${type}/${appId}`];
+  if (!itad_item) throw new Error("No data found for the given game id"); // should probably be used in the status instead
 
   if (itad_item.price) {
     itad_info_output += itadButton({
