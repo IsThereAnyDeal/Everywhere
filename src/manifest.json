@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "IsThereAnyDeal Everywhere",
   "version": "2.0.0",
-  "description": "Check game prices and the best deals on all pages with IsThereAnyDeal",
+  "description": "Check game prices and the best deals on any webpage with IsThereAnyDeal",
   "homepage_url": "https://everywhere.isthereanydeal.com/",
   "icons": {
     "16": "icons/icon16.png",
