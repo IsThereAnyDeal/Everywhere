@@ -39,7 +39,7 @@ function getCoords(elem: EventTarget) {
 
 function appendAfterFirstText(
   parentElement: Node,
-  elementToAppend: Node
+  elementToAppend: Node // likely itadInlineIcon
 ): boolean {
   const priceOrPercentageRegex = /[%€$£¥]?[\d]+([.,]\d+)?[%€$£¥]?/;
 
