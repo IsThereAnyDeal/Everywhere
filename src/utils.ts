@@ -38,28 +38,64 @@ function getCoords(elem: EventTarget) {
 }
 
 function appendAfterFirstText(
-  parentElement: HTMLAnchorElement,
-  elementToAppend: HTMLSpanElement
-) {
-  for (const childElement of parentElement.childNodes) {
-    if (childElement === null || childElement.textContent === null) continue;
+  parentElement: Node,
+  elementToAppend: Node // likely itadInlineIcon
+): boolean {
+  const priceOrPercentageRegex = /[%€$£¥]?[\d]+([.,]\d+)?[%€$£¥]?/;
 
-    const isNonEmptyTextNode =
-      childElement.nodeType === Node.TEXT_NODE &&
-      childElement.textContent?.trim().length > 0;
-    const isINode = childElement.nodeName === "I";
-
-    if (isNonEmptyTextNode || isINode) {
-      parentElement.insertBefore(elementToAppend, childElement.nextSibling);
-      return true;
+  let treeWalker = document.createTreeWalker(
+    parentElement,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode: (node: Text) => {
+        // We accept non-empty text nodes that are not just whitespace
+        // and contain either a price or a percentage.
+        return node.textContent?.trim() &&
+          priceOrPercentageRegex.test(node.textContent)
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_SKIP;
+      },
     }
+  );
 
-    if (
-      appendAfterFirstText(childElement as HTMLAnchorElement, elementToAppend)
-    )
-      return true;
+  let textNode = treeWalker.nextNode();
+
+  if (!textNode) {
+    treeWalker = document.createTreeWalker(
+      parentElement,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: (node: Text) => {
+          // We accept any non-empty text node
+          return node.textContent?.trim()
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_SKIP;
+        },
+      }
+    );
+
+    textNode = treeWalker.nextNode();
   }
-  return false;
+
+  if (textNode) {
+    if (textNode.nextSibling) {
+      textNode.parentNode?.insertBefore(elementToAppend, textNode.nextSibling);
+    } else {
+      textNode.parentNode?.appendChild(elementToAppend);
+    }
+  } else {
+    // check if the parent node has a image node directly in it
+    const hasImage = Array.from(parentElement.childNodes).some(
+      (node) => node.nodeName === "IMG"
+    );
+    // If no suitable text node is found, append to the parent node itself
+    // except if there is an image node directly in it
+    if (!hasImage) parentElement.appendChild(elementToAppend);
+    else return false;
+  }
+
+  // Return true, since the element is appended in any case
+  return true;
 }
 
 export { debounce, keepInViewPort, getCoords, appendAfterFirstText };

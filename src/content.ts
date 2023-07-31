@@ -11,7 +11,6 @@ import {
 import itadInlineIcon from "./components/itadInlineIcon";
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
-const itad_included = true;
 let itad_info_container: HTMLDivElement;
 let itad_info_status: HTMLDivElement;
 
@@ -28,7 +27,7 @@ for (const blacklisted of blacklist) {
   }
 }
 
-function handleLinks() {
+function handleSteamLinks() {
   const external_links: NodeListOf<HTMLAnchorElement> =
     document.querySelectorAll(
       'a[href*="//store.steampowered.com/"]:not([data-itad-handled="1"])'
@@ -39,13 +38,13 @@ function handleLinks() {
     );
 
     if (appIDs && appIDs?.length >= 3) {
-      const elementToAppend = itadInlineIcon(appIDs);
-      appendAfterFirstText(external_links[i], elementToAppend);
+      const inlineIcon = itadInlineIcon(appIDs);
+      appendAfterFirstText(external_links[i], inlineIcon);
 
-      elementToAppend.addEventListener("mouseenter", OnEnterExtraElem, {
+      inlineIcon.addEventListener("mouseenter", iconHoverStart, {
         passive: true,
       });
-      elementToAppend.addEventListener("mouseleave", OnLeaveExtraElem, {
+      inlineIcon.addEventListener("mouseleave", iconHoverEnd, {
         passive: true,
       });
 
@@ -53,7 +52,7 @@ function handleLinks() {
     }
   }
 
-  if (itad_included && !itad_info_container) {
+  if (!itad_info_container) {
     const { container, status } = itadContainer();
 
     itad_info_container = container;
@@ -61,16 +60,20 @@ function handleLinks() {
 
     document.body.appendChild(itad_info_container);
 
-    itad_info_container.addEventListener("mouseenter", OnEnterContainer, {
-      passive: true,
-    });
-    itad_info_container.addEventListener("mouseleave", OnLeaveContainer, {
+    itad_info_container.addEventListener(
+      "mouseenter",
+      infoContainerHoverStart,
+      {
+        passive: true,
+      }
+    );
+    itad_info_container.addEventListener("mouseleave", infoContainerHoverEnd, {
       passive: true,
     });
   }
 }
 
-function getItemInfo(e: Event, currentInfoElemId: string) {
+function requestGameInfo(e: Event, currentInfoElemId: string) {
   clearTimeout(itad_request_timer);
   itad_request_timer = setTimeout(async function () {
     const target = e.target as HTMLSpanElement;
@@ -86,7 +89,7 @@ function getItemInfo(e: Event, currentInfoElemId: string) {
       const response = await fetch(feedURL);
       if (response.ok) {
         const result = (await response.json()) as GameInfo;
-        buildItemInfo(result, e, currentInfoElemId);
+        displayGameInfo(result, e, currentInfoElemId);
       }
     } catch (error) {
       console.error("Failed to fetch data:", error);
@@ -94,19 +97,19 @@ function getItemInfo(e: Event, currentInfoElemId: string) {
   }, 350);
 }
 
-async function buildItemInfo(gameInfo: GameInfo, a: Event, b: string) {
-  const itad_info_elem = itadItemInfo(gameInfo, a, b);
-
-  if (!document.getElementById(b))
+async function displayGameInfo(gameInfo: GameInfo, a: Event, b: string) {
+  if (!document.getElementById(b)) {
+    const itad_info_elem = itadItemInfo(gameInfo, a, b);
     document
       ?.getElementById("itad_info_container")
       ?.appendChild(itad_info_elem);
+  }
 
   keepInViewPort(itad_info_container);
   itad_info_status.innerHTML = "";
 }
 
-function OnEnterExtraElem(e: Event) {
+function iconHoverStart(e: Event) {
   const target = e.target as HTMLElement;
   const itadId = target.dataset.itadId;
   const { left, top, right, bottom } = target.getBoundingClientRect();
@@ -139,13 +142,13 @@ function OnEnterExtraElem(e: Event) {
     currentInfoElem.style.display = "flex";
   } else {
     itad_info_status.innerHTML = "Loading...";
-    getItemInfo(e, currentInfoElemId);
+    requestGameInfo(e, currentInfoElemId);
   }
 
   keepInViewPort(itad_info_container);
 }
 
-function OnLeaveExtraElem(e: Event) {
+function iconHoverEnd(e: Event) {
   if (itad_info_container.classList.contains("itad_info_container_hidden"))
     clearTimeout(itad_request_timer);
   itad_display_timer = setTimeout(function () {
@@ -153,24 +156,42 @@ function OnLeaveExtraElem(e: Event) {
   }, 200);
 }
 
-function OnEnterContainer() {
+function infoContainerHoverStart() {
   clearTimeout(itad_display_timer);
   itad_info_container.classList.remove("itad_info_container_hidden");
 }
 
-function OnLeaveContainer() {
+function infoContainerHoverEnd() {
   itad_display_timer = setTimeout(function () {
     itad_info_container.classList.add("itad_info_container_hidden");
   }, 200);
 }
 
+let debouncedHandleSteamLinks = debounce(handleSteamLinks, 500);
+
+function isPartOfIgnoredElement(
+  node: Node | null,
+  ignoredElementId: string
+): boolean {
+  if ((node as HTMLElement)?.id === ignoredElementId) {
+    return true;
+  }
+
+  return node?.parentNode
+    ? isPartOfIgnoredElement(node.parentNode, ignoredElementId)
+    : false;
+}
+
 const observer = new MutationObserver((mutationsList) => {
   for (const mutation of mutationsList) {
-    if (mutation.type === "childList") {
-      debounce(handleLinks, 500);
+    if (
+      mutation.type === "childList" &&
+      !isPartOfIgnoredElement(mutation.target, "itad_info_container")
+    ) {
+      debouncedHandleSteamLinks();
     }
   }
 });
 
 observer.observe(document, { childList: true, subtree: true });
-handleLinks();
+handleSteamLinks();

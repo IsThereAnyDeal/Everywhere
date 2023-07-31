@@ -6,3 +6,5 @@ dist/
 /src/config.ts
 
 .vscode/settings.json
+
+.markdownlint.json
