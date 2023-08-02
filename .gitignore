@@ -1,10 +1,4 @@
-.idea/
 releases/
-nppBackup/
 node_modules/
 dist/
 /src/config.ts
-
-.vscode/settings.json
-
-.markdownlint.json
