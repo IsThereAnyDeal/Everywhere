@@ -16,8 +16,16 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "settings": {
+        "import/resolver": {
+            "typescript": true,
+            "node": true
+        }
+    },
     "rules": {
-        "indent": "error"
+        "indent": "error",
+        "import/newline-after-import": "error",
+        "import/first": "error"
     },
     "ignorePatterns": ["dist/"]
 }

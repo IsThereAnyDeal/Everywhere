@@ -10,6 +10,7 @@ import {
     appendAfterFirstText,
 } from "./utils";
 import itadInlineIcon from "./components/itadInlineIcon";
+
 let itad_request_timer: NodeJS.Timeout;
 let itad_display_timer: NodeJS.Timeout;
 let itad_info_container: HTMLDivElement;
