@@ -18,5 +18,6 @@
     },
     "rules": {
         "indent": "error"
-    }
+    },
+    "ignorePatterns": ["dist/"]
 }

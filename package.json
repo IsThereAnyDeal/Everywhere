@@ -23,7 +23,8 @@
   "main": "content.js",
   "scripts": {
     "dev": "rollup -c -w",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "check": "npx tsc --noEmit & eslint src"
   },
   "author": "GreenMan36",
   "license": "MIT",
