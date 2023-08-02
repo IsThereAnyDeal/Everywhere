@@ -24,6 +24,7 @@
     },
     "rules": {
         "indent": "error",
+        "operator-linebreak": ["error", "before"],
         "import/newline-after-import": "error",
         "import/first": "error",
         "import/no-nodejs-modules": "error"
