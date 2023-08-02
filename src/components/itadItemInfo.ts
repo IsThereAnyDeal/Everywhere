@@ -1,4 +1,4 @@
-import GameInfo from "src/types/GamePriceOverview";
+import GameInfo from "../types/GamePriceOverview";
 import itadButton from "./itadButton";
 
 const itadItemInfo = (gameInfo: GameInfo, a: Event, b: string) => {

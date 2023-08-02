@@ -1,7 +1,8 @@
 import { ITAD_API_KEY } from "./config";
-import GameInfo from "./types/GamePriceOverview";
 import itadContainer from "./components/itadContainer";
 import itadItemInfo from "./components/itadItemInfo";
+import GameInfo from "./types/GamePriceOverview";
+
 import {
     debounce,
     keepInViewPort,
