@@ -25,7 +25,8 @@
     "rules": {
         "indent": "error",
         "import/newline-after-import": "error",
-        "import/first": "error"
+        "import/first": "error",
+        "import/no-nodejs-modules": "error"
     },
     "ignorePatterns": ["dist/"]
 }
