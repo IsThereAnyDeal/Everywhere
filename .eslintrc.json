@@ -39,7 +39,8 @@
         "multiline-comment-style": ["warn", "starred-block"],
         "import/newline-after-import": "error",
         "import/first": "error",
-        "import/no-nodejs-modules": "error"
+        "import/no-nodejs-modules": "error",
+        "import/no-duplicates": "off" // it reported svelte imports and I don't know why
     },
     "ignorePatterns": ["dist/"]
 }

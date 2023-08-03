@@ -54,7 +54,7 @@
 </script>
 
 {#if isOpen}
-    <div id="itad_info_container"
+    <div role="tooltip" id="itad_info_container"
          bind:this={container}
          on:mouseenter={handleEnter}
          on:mouseleave={close}

@@ -5,7 +5,7 @@
     import PriceButton from "./Buttons/PriceButton.svelte";
 
     export let steamId: SteamId;
-    export let data: GameOverviewData;
+    export let data: GameOverviewData|null;
 
     function getPlain(url: string): string|null {
         const m = url.match(/isthereanydeal.com\/game\/(\w+)\/info/);
@@ -13,11 +13,11 @@
     }
 
     let plain: string|null;
-    $: plain = getPlain(data.urls?.info ?? "");
+    $: plain = getPlain(data?.urls?.info ?? "");
 </script>
 
 <div class="parent">
-    {#if data.price || data.lowest || data.urls}
+    {#if data && (data.price || data.lowest || data.urls)}
         {#if data.price}
             <PriceButton url={data.price.url}
                          header="Best price now:"
@@ -32,7 +32,7 @@
             </span>
         {/if}
 
-        {#if data.urls.info}
+        {#if data.urls?.info}
             <Button url={data.urls.info}>Show all deals</Button>
         {/if}
 

@@ -33,7 +33,7 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c",
-    "check": "npx tsc --noEmit & eslint src"
+    "check": "npx tsc --noEmit & eslint src & svelte-check"
   },
   "author": "GreenMan36",
   "license": "MIT",

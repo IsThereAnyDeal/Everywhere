@@ -17,7 +17,7 @@
 </script>
 
 
-<span on:mouseenter={handleHoverStart}
+<span role="tooltip" on:mouseenter={handleHoverStart}
       on:mouseleave={handleHoverEnd}
       bind:this={node}>E</span>
 

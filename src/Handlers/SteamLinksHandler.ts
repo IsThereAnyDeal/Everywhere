@@ -18,8 +18,9 @@ export function handleSteamLinks(modal: Modal, root: ParentNode | undefined = un
                 const steamId = new SteamId(m[1]);
                 const node = getAppendableNode(a);
 
-                const target = node?.parentNode ?? a;
-                const anchor = node?.nextSibling ?? undefined
+                // TODO can this be done without casts?
+                const target = (node?.parentNode ?? a) as Element;
+                const anchor = node?.nextSibling ? <Element>node.nextSibling : undefined
 
                 new InlineIcon({
                     target,
