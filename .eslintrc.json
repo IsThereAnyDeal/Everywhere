@@ -33,8 +33,10 @@
         }
     },
     "rules": {
-        "indent": "error",
+        "indent": ["error", 4, {"SwitchCase": 1}],
         "operator-linebreak": ["error", "before"],
+        "curly": ["error", "all"],
+        "multiline-comment-style": ["warn", "starred-block"],
         "import/newline-after-import": "error",
         "import/first": "error",
         "import/no-nodejs-modules": "error"

@@ -1,1 +1,3 @@
-export const ITAD_API_KEY = "";
+export default Object.freeze({
+    ITADApiKey: ""
+});

@@ -5,11 +5,12 @@
     "moduleResolution": "bundler",
     "rootDir": "src",
     "strict": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "types": []
+    "types": ["svelte"]
   },
-  "include": ["./src"]
+  "include": ["./src/**/*"]
 }

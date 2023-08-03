@@ -1,3 +1,4 @@
+
 function debounce(func: () => void, wait: number) {
     let timeout: ReturnType<typeof setTimeout>;
 
@@ -18,12 +19,10 @@ function keepInViewPort(elem: EventTarget) {
     const coords = getCoords(element);
 
     if (rect.bottom + 20 > window.innerHeight) {
-        element.style.top =
-      coords.top - (rect.bottom - window.innerHeight) - 20 + "px";
+        element.style.top = coords.top - (rect.bottom - window.innerHeight) - 20 + "px";
     }
     if (rect.right + 20 > window.innerWidth) {
-        element.style.left =
-      coords.left - (rect.right - window.innerWidth) - 20 + "px";
+        element.style.left = coords.left - (rect.right - window.innerWidth) - 20 + "px";
     }
 }
 
@@ -37,21 +36,20 @@ function getCoords(elem: EventTarget) {
     };
 }
 
-function appendAfterFirstText(
-    parentElement: Node,
-    elementToAppend: Node // likely itadInlineIcon
-): boolean {
+function getAppendableNode(parentElement: HTMLElement): Element|null {
+    parentElement.normalize(); // ensures there are no two sibling text nodes
+
     const priceOrPercentageRegex = /[%€$£¥]?[\d]+([.,]\d+)?[%€$£¥]?/;
 
+    /*
+     * Find first non-empty text node that is not just whitespace
+     * and contains either a price or percentage
+     */
     let treeWalker = document.createTreeWalker(
-        parentElement,
-        NodeFilter.SHOW_TEXT,
-        {
+        parentElement, NodeFilter.SHOW_TEXT, {
             acceptNode: (node: Text) => {
-                // We accept non-empty text nodes that are not just whitespace
-                // and contain either a price or a percentage.
-                return node.textContent?.trim() &&
-          priceOrPercentageRegex.test(node.textContent)
+                return node.textContent?.trim()
+                && priceOrPercentageRegex.test(node.textContent)
                     ? NodeFilter.FILTER_ACCEPT
                     : NodeFilter.FILTER_SKIP;
             },
@@ -59,43 +57,46 @@ function appendAfterFirstText(
     );
 
     let textNode = treeWalker.nextNode();
+    if (textNode) {
+        // TODO i dont like this type conversion here
+        return (textNode as unknown) as Element;
 
-    if (!textNode) {
-        treeWalker = document.createTreeWalker(
-            parentElement,
-            NodeFilter.SHOW_TEXT,
-            {
-                acceptNode: (node: Text) => {
-                    // We accept any non-empty text node
-                    return node.textContent?.trim()
-                        ? NodeFilter.FILTER_ACCEPT
-                        : NodeFilter.FILTER_SKIP;
-                },
-            }
-        );
-
-        textNode = treeWalker.nextNode();
     }
 
-    if (textNode) {
-        if (textNode.nextSibling) {
-            textNode.parentNode?.insertBefore(elementToAppend, textNode.nextSibling);
-        } else {
-            textNode.parentNode?.appendChild(elementToAppend);
+    /*
+     * Find first non-empty text node
+     */
+    treeWalker = document.createTreeWalker(
+        parentElement, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node: Text) => {
+                return node.textContent?.trim()
+                    ? NodeFilter.FILTER_ACCEPT
+                    : NodeFilter.FILTER_SKIP;
+            },
         }
+    );
+
+    textNode = treeWalker.nextNode();
+
+    if (textNode) {
+        // TODO i dont like this type conversion here
+        return (textNode as unknown) as Element;
     } else {
-    // check if the parent node has a image node directly in it
+        // check if the parent node has an image node directly in it
         const hasImage = Array.from(parentElement.childNodes).some(
             (node) => node.nodeName === "IMG"
         );
-        // If no suitable text node is found, append to the parent node itself
-        // except if there is an image node directly in it
-        if (!hasImage) parentElement.appendChild(elementToAppend);
-        else return false;
+
+        /*
+         * If no suitable text node is found, append to the parent node itself
+         * except if there is an image node directly in it
+         */
+        if (!hasImage) {
+            return null;
+        }
     }
 
-    // Return true, since the element is appended in any case
-    return true;
+    throw new Error();
 }
 
-export { debounce, keepInViewPort, getCoords, appendAfterFirstText };
+export { debounce, keepInViewPort, getCoords, getAppendableNode };
