@@ -4,7 +4,11 @@ import copy from "esbuild-plugin-copy";
 import esbuildSvelte from "esbuild-svelte";
 import sveltePreprocess from "svelte-preprocess";
 
-await esbuild.build({
+const [node_, program_, ...args_] = process.argv;
+const args = new Set(args_);
+
+const options = {
+    logLevel: "info",
     format: "iife",
     entryPoints: ["./src/content.js"],
     bundle: true,
@@ -46,5 +50,11 @@ await esbuild.build({
         }),
         */
     ]
+};
 
-});
+if (args.has("watch")) {
+    const context = await esbuild.context(options)
+    await context.watch();
+} else {
+    await esbuild.build(options);
+}

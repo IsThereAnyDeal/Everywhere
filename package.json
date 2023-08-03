@@ -14,11 +14,6 @@
     "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-svelte": "^2.32.4",
-    "rollup": "^3.23.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-copy": "^3.4.0",
-    "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "svelte": "^4.1.2",
     "svelte-check": "^3.4.6",
     "svelte-preprocess": "^5.0.4",
@@ -31,8 +26,8 @@
   "description": "Check game prices and the best deals on any webpage with IsThereAnyDeal",
   "main": "content.js",
   "scripts": {
-    "dev": "rollup -c -w",
-    "build": "rollup -c",
+    "watch": "node build.mjs watch",
+    "build": "node build.mjs",
     "check": "npx tsc --noEmit & eslint src & svelte-check"
   },
   "author": "GreenMan36",
