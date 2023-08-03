@@ -1,8 +1,14 @@
 {
+  "name": "isthereanydeal-everywhere",
+  "scripts": {
+    "watch": "node build.mjs watch",
+    "build": "node build.mjs",
+    "check": "npx tsc --noEmit & eslint src & svelte-check"
+  },
+  "dependencies": {
+    "svelte": "^4.1.2"
+  },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.1",
-    "@types/dompurify": "^3.0.2",
-    "@types/webextension-polyfill": "^0.10.0",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "esbuild": "^0.18.17",
@@ -14,26 +20,9 @@
     "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-svelte": "^2.32.4",
-    "svelte": "^4.1.2",
     "svelte-check": "^3.4.6",
     "svelte-preprocess": "^5.0.4",
     "tslib": "^2.5.3",
     "typescript": "^5.1.6"
-  },
-  "type": "module",
-  "name": "isthereanydeal-everywhere",
-  "version": "2.0.0",
-  "description": "Check game prices and the best deals on any webpage with IsThereAnyDeal",
-  "main": "content.js",
-  "scripts": {
-    "watch": "node build.mjs watch",
-    "build": "node build.mjs",
-    "check": "npx tsc --noEmit & eslint src & svelte-check"
-  },
-  "author": "GreenMan36",
-  "license": "MIT",
-  "dependencies": {
-    "dompurify": "^3.0.5",
-    "webextension-polyfill": "^0.10.0"
   }
 }

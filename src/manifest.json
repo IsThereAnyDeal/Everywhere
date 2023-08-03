@@ -13,7 +13,6 @@
     "96": "assets/icon96.png",
     "128": "assets/icon128.png"
   },
-
   "content_scripts": [
     {
       "css": ["content.css"],
@@ -23,6 +22,5 @@
       "exclude_matches": ["https://isthereanydeal.com/*", "http://localhost/*"]
     }
   ],
-
   "permissions": ["<all_urls>"]
 }
