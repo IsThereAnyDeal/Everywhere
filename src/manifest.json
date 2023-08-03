@@ -5,13 +5,13 @@
   "description": "Check game prices and the best deals on any webpage with IsThereAnyDeal",
   "homepage_url": "https://everywhere.isthereanydeal.com/",
   "icons": {
-    "16": "icons/icon16.png",
-    "24": "icons/icon24.png",
-    "32": "icons/icon32.png",
-    "48": "icons/icon48.png",
-    "64": "icons/icon64.png",
-    "96": "icons/icon96.png",
-    "128": "icons/icon128.png"
+    "16": "assets/icon16.png",
+    "24": "assets/icon24.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "64": "assets/icon64.png",
+    "96": "assets/icon96.png",
+    "128": "assets/icon128.png"
   },
 
   "content_scripts": [

@@ -21,8 +21,8 @@ const options = {
             resolveFrom: "cwd",
             assets: [
                 {
-                    from: "./src/icons/*",
-                    to: "./dist/icons"
+                    from: "./static/assets/*",
+                    to: "./dist/assets"
                 },
                 {
                     from: "./src/manifest.json",
