@@ -27,7 +27,7 @@
                 <div slot="footer">{data.price.store}</div>
             </PriceButton>
         {:else}
-            <span data-itad-handled="1" class="noprice">
+            <span class="noprice">
                 No current price found
             </span>
         {/if}

@@ -7,7 +7,7 @@ export function handleSteamLinks(modal: Modal, root: ParentNode | undefined = un
     root = root ?? document;
 
     const links: NodeListOf<HTMLAnchorElement>
-        = root.querySelectorAll("a[href*='//store.steampowered.com/']:not([data-itad-handled='1'])");
+        = root.querySelectorAll("a[href*='//store.steampowered.com/']:not([data-itad-e='1'])");
     const regex = /\/\/store.steampowered.com\/((?:app|apps|sub|bundle)\/[0-9]+)/;
 
     for (const a of links) {
@@ -34,7 +34,7 @@ export function handleSteamLinks(modal: Modal, root: ParentNode | undefined = un
                 console.log("Didn't find node to append to", a.href);
             }
 
-            a.dataset.itadHandled = "1";
+            a.dataset.itadE = "1";
         }
     }
 }

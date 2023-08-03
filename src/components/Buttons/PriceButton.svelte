@@ -5,7 +5,7 @@
 </script>
 
 
-<a href={url} target="_blank" rel="noopener" data-itad-handled="1">
+<a href={url} target="_blank" rel="noopener" data-itad-e="1">
     {header}
 
     <div class="highlighted">
