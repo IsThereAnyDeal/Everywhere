@@ -36,20 +36,13 @@ function getCoords(elem: EventTarget) {
     };
 }
 
-function getAppendableNode(parentElement: HTMLElement): Element|null {
-    parentElement.normalize(); // ensures there are no two sibling text nodes
+function findNodeWithRegex(root: Element, regex: RegExp): Element|null {
 
-    const priceOrPercentageRegex = /[%€$£¥]?[\d]+([.,]\d+)?[%€$£¥]?/;
-
-    /*
-     * Find first non-empty text node that is not just whitespace
-     * and contains either a price or percentage
-     */
     let treeWalker = document.createTreeWalker(
-        parentElement, NodeFilter.SHOW_TEXT, {
+        root, NodeFilter.SHOW_TEXT, {
             acceptNode: (node: Text) => {
                 return node.textContent?.trim()
-                && priceOrPercentageRegex.test(node.textContent)
+                && regex.test(node.textContent)
                     ? NodeFilter.FILTER_ACCEPT
                     : NodeFilter.FILTER_SKIP;
             },
@@ -60,13 +53,31 @@ function getAppendableNode(parentElement: HTMLElement): Element|null {
     if (textNode) {
         // TODO i dont like this type conversion here
         return (textNode as unknown) as Element;
+    }
+    return null;
+}
 
+function getAppendableNode(parentElement: HTMLElement): Element|null {
+    parentElement.normalize(); // ensures there are no two sibling text nodes
+
+    /*
+     * Find first non-empty text node that is not just whitespace
+     * and contains a price
+     */
+    let priceNode = findNodeWithRegex(parentElement, /[€$£¥]\s*\d+([.,]\d+)?|\d+([.,]\d+)?\s*[€$£¥]|Free/i);
+    if (priceNode) {
+        return priceNode;
+    }
+
+    let cutNode = findNodeWithRegex(parentElement, /\d+\s*%/);
+    if (cutNode) {
+        return cutNode;
     }
 
     /*
      * Find first non-empty text node
      */
-    treeWalker = document.createTreeWalker(
+    let treeWalker = document.createTreeWalker(
         parentElement, NodeFilter.SHOW_TEXT, {
             acceptNode: (node: Text) => {
                 return node.textContent?.trim()
@@ -76,7 +87,7 @@ function getAppendableNode(parentElement: HTMLElement): Element|null {
         }
     );
 
-    textNode = treeWalker.nextNode();
+    let textNode = treeWalker.nextNode();
 
     if (textNode) {
         // TODO i dont like this type conversion here
