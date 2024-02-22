@@ -13,9 +13,16 @@ An icon will appear adjacent to each Steam store link. Hover over it to reveal a
 
 Try it on Steam, Google, YouTube, Reddit, or **everywhere**!
 
+## Build
+
+```
+# node v21.3.0
+# npm v10.2.4
+
+npm run build
+```
+
 ## Credits
 
-Currently maintained by [GreenMan36](https://github.com/GreenMan36/), original idea by [Zoltan Wacha](https://github.com/wzol) 
+Original idea by [Zoltan Wacha](https://github.com/wzol) 
 
-[![GreenMan36](https://avatars.githubusercontent.com/u/5887406?s=50&v=4)](https://github.com/GreenMan36/)
-[![Zoltan Wacha](https://avatars.githubusercontent.com/u/11561358?s=50&v=4)](https://github.com/wzol)
