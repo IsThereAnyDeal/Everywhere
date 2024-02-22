@@ -1,61 +1,43 @@
 <script lang="ts">
-    import {type GameOverviewData} from "../Data/GameOverviewTypes";
+    import {Price, PriceData} from "../Data/_types";
     import SteamId from "../Data/SteamId";
     import Button from "./Buttons/Button.svelte";
     import PriceButton from "./Buttons/PriceButton.svelte";
 
     export let steamId: SteamId;
-    export let data: GameOverviewData|null;
+    export let data: PriceData|null;
 
-    function getPlain(url: string): string|null {
-        const m = url.match(/isthereanydeal.com\/game\/(\w+)\/info/);
-        return m && m[1] ? m[1] : null;
+    function price(price: Price) {
+        return price.amount.toLocaleString("en", {
+            style: "currency",
+            currency: price.currency
+        });
     }
-
-    let plain: string|null;
-    $: plain = getPlain(data?.urls?.info ?? "");
 </script>
 
 <div class="parent">
-    {#if data && (data.price || data.lowest || data.urls)}
-        {#if data.price}
-            <PriceButton url={data.price.url}
-                         header="Best price now:"
-                         discount={data.price.cut}>
-                {data.price.price_formatted}
-
-                <div slot="footer">{data.price.store}</div>
+    {#if data && (data.current || data.lowest)}
+        {#if data.current}
+            {@const current = data.current}
+            <PriceButton url={current.url} discount={current.cut}>
+                <svelte:fragment slot="header">Best price now:</svelte:fragment>
+                {price(current.price)}
+                <div slot="footer">{current.shop.name}</div>
             </PriceButton>
+            <Button url="https://isthereanydeal/{steamId}">Show all deals</Button>
         {:else}
             <span class="noprice">
                 No current price found
             </span>
         {/if}
 
-        {#if data.urls?.info}
-            <Button url={data.urls.info}>Show all deals</Button>
-        {/if}
-
         {#if data.lowest}
-            <PriceButton url={data.lowest.url} header="History low:" discount={data.lowest.cut}>
-                {data.lowest.price_formatted}
-
-                <div slot="footer">
-                    at {data.lowest.store} {data.lowest.recorded_formatted}
-                </div>
+            {@const lowest = data.lowest}
+            <PriceButton url="https://isthereanydeal/id:{data.id}/history/" discount={lowest.cut}>
+                <svelte:fragment slot="header">History low:</svelte:fragment>
+                {price(lowest.price)}
+                <div slot="footer">at {data.lowest.shop.name} {data.lowest.timestamp}</div>
             </PriceButton>
-        {/if}
-
-        {#if plain}
-            <Button url="https://isthereanydeal.com/#/page:game/wait?plain={plain}">
-                Wait for better price
-            </Button>
-        {/if}
-
-        {#if data.urls}
-            <Button url={data.urls.history}>
-                Price history
-            </Button>
         {/if}
 
         <Button url="https://steampeek.hu?appid={steamId.id}#itadext">

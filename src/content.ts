@@ -1,4 +1,4 @@
-import Modal from "./components/Modal.svelte";
+import Modal from "./Components/Modal.svelte";
 import {handleSteamLinks} from "./Handlers/SteamLinksHandler";
 
 const blacklist = [

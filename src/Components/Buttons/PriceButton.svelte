@@ -1,12 +1,11 @@
 <script lang="ts">
     export let url: string|undefined = undefined;
-    export let header: string;
     export let discount: number|undefined;
 </script>
 
 
 <a href={url} target="_blank" rel="noopener" data-itad-e="1">
-    {header}
+    <slot name="header"></slot>
 
     <div class="highlighted">
         {#if discount}

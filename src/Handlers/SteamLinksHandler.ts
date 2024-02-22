@@ -1,5 +1,5 @@
-import InlineIcon from "../components/InlineIcon.svelte";
-import Modal from "../components/Modal.svelte";
+import InlineIcon from "../Components/InlineIcon.svelte";
+import Modal from "../Components/Modal.svelte";
 import SteamId from "../Data/SteamId";
 import {getAppendableNode} from "../utils";
 

@@ -1,8 +1,8 @@
 <script lang="ts">
     import {tick} from "svelte";
     import {fade} from "svelte/transition";
-    import {fetchGameOverview} from "../Data/DataLoader.js";
-    import {type GameOverviewData} from "../Data/GameOverviewTypes";
+    import {PriceData} from "../Data/_types";
+    import Api from "../Data/Api";
     import SteamId from "../Data/SteamId";
     import {getCoords, keepInViewPort} from "../utils";
     import Info from "./Info.svelte";
@@ -16,7 +16,7 @@
     let steamId: SteamId;
 
     let isOpen: boolean = false;
-    let dataPromise: Promise<GameOverviewData|null>|undefined;
+    let dataPromise: Promise<PriceData|null>|undefined;
 
     export function open(steamId_: SteamId, attachTo: HTMLElement) {
         steamId = steamId_;
@@ -30,7 +30,11 @@
             position(attachTo);
             keepInViewPort(container);
 
-            dataPromise = fetchGameOverview(steamId);
+            dataPromise = (async function() {
+                const id = await Api.gameIdLookup(steamId);
+                const response = id === null ? null : await Api.gameOverview(id);
+                return response?.prices.find(o => o.id === id) ?? null
+            })()
             await tick();
             keepInViewPort(container);
         })();
