@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {Price, PriceData} from "../Data/_types";
-    import SteamId from "../Data/SteamId";
+    import {Price, PriceData} from "../../common/_types";
+    import SteamId from "../../common/SteamId";
     import Button from "./Buttons/Button.svelte";
     import PriceButton from "./Buttons/PriceButton.svelte";
 
@@ -24,7 +24,7 @@
                 {price(current.price)}
                 <div slot="footer">{current.shop.name}</div>
             </PriceButton>
-            <Button url="https://isthereanydeal/{steamId}">Show all deals</Button>
+            <Button url="https://isthereanydeal.com/{steamId}">Show all deals</Button>
         {:else}
             <span class="noprice">
                 No current price found
@@ -33,7 +33,7 @@
 
         {#if data.lowest}
             {@const lowest = data.lowest}
-            <PriceButton url="https://isthereanydeal/id:{data.id}/history/" discount={lowest.cut}>
+            <PriceButton url="https://isthereanydeal.com/id:{data.id}/history/" discount={lowest.cut}>
                 <svelte:fragment slot="header">History low:</svelte:fragment>
                 {price(lowest.price)}
                 <div slot="footer">at {data.lowest.shop.name} {data.lowest.timestamp}</div>
@@ -45,11 +45,9 @@
         </Button>
     {:else}
         <div class="noinfo">
-            Currently there is no information for this game.<br/><br/>
-            You can visit our site and browse all deals:
-
-            <Button url="https://isthereanydeal.com/">
-                Trending deals
+            Currently there is no information for this game.
+            <Button url="https://isthereanydeal.com/deals/">
+                You can visit our site and browse all deals
             </Button>
         </div>
     {/if}

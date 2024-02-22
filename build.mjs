@@ -10,9 +10,13 @@ const args = new Set(args_);
 const options = {
     logLevel: "info",
     format: "iife",
-    entryPoints: ["./src/content/content.ts"],
+    entryPoints: [
+        "./src/content/content.ts",
+        "./src/background/background.ts",
+        "./src/options/options.ts"
+    ],
     bundle: true,
-    minify: false,
+    minify: !args.has("dev"),
     sourcemap: true,
     outdir: "dist",
     plugins: [
@@ -26,7 +30,11 @@ const options = {
                 },
                 {
                     from: "./manifest.json",
-                    to: "./dist"
+                    to: "./dist/manifest.json"
+                },
+                {
+                    from: "./src/Options/options.html",
+                    to: "./dist/Options/options.html"
                 }
             ]
         }),

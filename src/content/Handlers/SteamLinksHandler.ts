@@ -1,6 +1,6 @@
 import InlineIcon from "../Components/InlineIcon.svelte";
 import Modal from "../Components/Modal.svelte";
-import SteamId from "../Data/SteamId";
+import SteamId from "../../common/SteamId";
 import {getAppendableNode} from "../utils";
 
 export function handleSteamLinks(modal: Modal, root: ParentNode | undefined = undefined) {

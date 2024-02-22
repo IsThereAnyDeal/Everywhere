@@ -1,9 +1,9 @@
 <script lang="ts">
     import {tick} from "svelte";
     import {fade} from "svelte/transition";
-    import {PriceData} from "../Data/_types";
-    import Api from "../Data/Api";
-    import SteamId from "../Data/SteamId";
+    import {PriceData} from "../../common/_types";
+    import Api from "../Data/ApiFacade";
+    import SteamId from "../../common/SteamId";
     import {getCoords, keepInViewPort} from "../utils";
     import Info from "./Info.svelte";
 

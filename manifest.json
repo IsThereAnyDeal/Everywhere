@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "IsThereAnyDeal Everywhere",
   "version": "2.0",
   "description": "Check game prices and the best deals on any webpage with IsThereAnyDeal",
@@ -15,12 +15,28 @@
   },
   "content_scripts": [
     {
-      "css": ["content.css"],
-      "js": ["content.js"],
+      "css": ["content/content.css"],
+      "js": ["content/content.js"],
       "run_at": "document_end",
       "matches": ["<all_urls>"],
-      "exclude_matches": ["https://isthereanydeal.com/*", "http://localhost/*"]
+      "exclude_matches": [
+        "*://isthereanydeal.com/*",
+        "*://chat.openai.com/*",
+        "*://store.steampowered.com/account/licenses/",
+        "*://localhost/*"
+      ]
     }
   ],
-  "permissions": ["<all_urls>"]
+  "background": {
+    "service_worker": "background/background.js",
+    "scripts": ["background/background.js"]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
 }

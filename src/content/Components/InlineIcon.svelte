@@ -1,5 +1,5 @@
 <script lang="ts">
-    import SteamId from "../Data/SteamId";
+    import SteamId from "../../common/SteamId";
     import Modal from "./Modal.svelte";
 
     export let modal: Modal;
