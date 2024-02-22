@@ -1,4 +1,4 @@
-import Config from "../config";
+import Config from "../../config";
 import {type GameIdLookupResponse, type GameOverviewResponse} from "./_types";
 import SteamId from "./SteamId";
 

@@ -10,7 +10,7 @@ const args = new Set(args_);
 const options = {
     logLevel: "info",
     format: "iife",
-    entryPoints: ["./src/content.js"],
+    entryPoints: ["./src/content/content.ts"],
     bundle: true,
     minify: false,
     sourcemap: true,
@@ -25,7 +25,7 @@ const options = {
                     to: "./dist/assets"
                 },
                 {
-                    from: "./src/manifest.json",
+                    from: "./manifest.json",
                     to: "./dist"
                 }
             ]
@@ -35,20 +35,9 @@ const options = {
             compilerOptions: {
                 hydratable: false,
                 css: "external",
-                dev: true // TODO
+                dev: args.has("dev")
             }
-        }),
-        /*
-        copy({
-            resolveFrom: "cwd",
-            assets: [
-                {
-                    from: ["./dist/content.css", "./dist/content.css.map"],
-                    to: ["./dist/css/components.css", "./dist/css/components.css.map"],
-                }
-            ]
-        }),
-        */
+        })
     ]
 };
 

@@ -1,4 +1,4 @@
 releases/
 node_modules/
 dist/
-/src/config.ts
+src/config.ts
