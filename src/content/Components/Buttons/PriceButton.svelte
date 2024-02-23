@@ -21,6 +21,7 @@
 <style>
     a {
         background-color: #31333a;
+        color: white;
         font-size: 0.92em;
         padding: 4px;
         margin: 2px 4px;
