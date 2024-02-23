@@ -254,9 +254,9 @@
         ["ZW", "ZWE", "Zimbabwe", "BWP"],
     ];
 
-    let country = "USD";
+    let country = "US";
     onMount(async () => {
-        country = ((await browser.storage.local.get("country"))?.country ?? "USD") as unknown as string;
+        country = ((await browser.storage.local.get("country"))?.country ?? "US") as unknown as string;
     });
 
     function handleSelection(e: Event) {
